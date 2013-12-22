@@ -17,9 +17,11 @@ cookbook "sudo"
 cookbook "ssh", github: "markolson/chef-ssh"
 
 cookbook "apache2"
+cookbook "memcached"
 cookbook "application"
 cookbook "application_php"
 cookbook "database"
+cookbook "neo4j-multi-server", github: "sovolve/cookbook-neo4j-multi-server"
 
 # This little bit of magick includes the cookbooks in the site-cookbooks directory too:
 def dependencies(path)

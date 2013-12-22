@@ -42,8 +42,8 @@ databases:
     password: <%= node.php_api.database_password %>
   neo4j:
     scheme: http
-    host: localhost
-    port: 7480
+    host: <%= @database['neo4j_main_host'] %>
+    port: <%= @database['neo4j_main_port'] %>
     #username: root
     #password: root
   neo4j-contacts:
@@ -72,12 +72,12 @@ memcached:
   default_cache_time: 21600
   servers:
     one:
-      host: localhost
-      port: 11211
+      host: <%= @database['memcached_host'] %>
+      port: <%= @database['memcached_port'] %> 
   unit_testing_servers:
     one:
-      host: localhost
-      port: 11212
+      host: <%= @database['memcached_host'] %>
+      port: <%= @database['memcached_port'] %> 
 
 # RabbitMQ
 rabbitmq:

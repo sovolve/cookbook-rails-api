@@ -10,4 +10,5 @@ depends "ssh"
 depends "application"
 depends "application_php"
 depends "database"
+depends "neo4j-multi-server"
 

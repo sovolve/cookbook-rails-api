@@ -24,6 +24,11 @@ application "php_api" do
   #migrate true
   enable_submodules true
 
+  # Appears to support composer out of the box?
+  # TODO: Test, try to use.
+  #composer true
+  #composer_command "php composer.phar"
+
   # Install php curl extension so that composer can run:
   packages ["php5-curl", "php5-mysql"]
 
@@ -36,6 +41,23 @@ application "php_api" do
     settings_template "app_env_config.yaml.erb"
 
     database_master_role "php_mysql_master"
+    database do
+      find_matching_role("memcached", true) do |memcached_node|
+        host = node_host memcached_node
+        host = (host == node.ipaddress) ? 'localhost' : host
+
+        memcached_host host
+        memcached_port memcached_node.memcached.port
+      end
+
+      find_matching_role("php_neo4j_main", true) do |neo4j_main_node|
+        host = node_host neo4j_main_node
+        host = (host == node.ipaddress) ? 'localhost' : host
+
+        neo4j_main_host host
+        neo4j_main_port neo4j_main_node.neo4j.server.port
+      end
+    end
   end
 
   before_symlink do
@@ -62,5 +84,13 @@ application "php_api" do
     app_root "/httpdocs"
     webapp_template "web_app.conf.erb"
     webapp_overrides allow_override: "All"
+  end
+end
+
+def node_host(node)
+  if node.attribute?('cloud')
+    node['cloud']['local_ipv4']
+  else
+    node['ipaddress']
   end
 end
