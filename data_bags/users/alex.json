@@ -1,0 +1,20 @@
+{
+  "name":"data_bag_item_users_alex",
+  "json_class":"Chef::DataBagItem",
+  "chef_type":"data_bag_item",
+  "data_bag":"users",
+  "raw_data":{
+    "id":"alex",
+    "ssh_keys":[
+      "ssh-dss AAAAB3NzaC1kc3MAAACBAL13YjuO9zz1JkwAFE2octIVwpWrexPbos8Fg8+Os98D3RXIJ0vj/or9oUPwLJ0lQosaWAhw+zejrhTK5ZuQyo3T/iJkd1oaIVxB1Pap3LTvc/R9v8KZyRSTahplecET0G3/nCAtuvJ0UXWv4h0D1QpdbofyCfy/4aSijdvGe4j3AAAAFQC9b+Q+gDy4vvHknadig5tDwEEc+wAAAIAKfwdW77IuolymuAfa/HyOncFpse8AEmwZiiHYJrcMVo7p55K9d8MeGMC/6vORovCxls//qc+5jYLNTo3pu/aCoko5kaggYFhVQ8UyC99tlZByZnhZ5PXSZAuVW7bsW8mD9qyhdFqPHaEsBMGaPwlnSNQmKC6La5SiWGFRAjjQ3AAAAIEAheGsDTTNf7p4eC+979WtgdkdbxtyOy2v506GDnAe29t0rr3Vlg/luX/r6qTq+RdCPHaOcPGaVDIBL8eL1/nbrL9bJSJml6xl0PRmL+RYAnvQ+MKoYeBYouHCLlgJTACEwROqqX8ek03ZZy/PpAlDIVgaVua1Um2q+Ct1HeEm7e0= alexwillemsma@Alexs-MacBook-Pro.local"
+    ],
+    "groups":[
+      "sysadmin",
+      "dba",
+      "devops",
+      "deploy"
+    ],
+    "uid":2001,
+    "shell":"/bin/bash"
+  }
+}

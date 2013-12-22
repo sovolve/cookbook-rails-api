@@ -1,0 +1,122 @@
+##################################################
+# Configuration overlay for chef managed backend #
+#                                                #
+# This file is managed by Chef, please do NOT    #
+# manually change it!                            #
+##################################################
+
+# The url at which our site can be accessed from, and redirect to
+site_url: http://<%= node.domain %>
+api_url: http://<%= node.php_api.subdomain %>.<%= node.domain %>
+
+session:
+  cookie_domain: <%= node.domain %>
+
+display_errors: true
+
+# segment.io configuration
+segmentIo:
+  enabled: yes
+  api-key: bn6ym3850v
+  secret: xrst1pis0qx3f1uri9c1
+  debug: no
+  ssl: no
+
+# Facebook appid/secret/apikey for api.theapp.dev
+facebook:
+  appId: 464411903617377
+  secret: 9c29945cd63ee837ee769f5059999c09
+  #fileUpload: true  # Uncomment this for file upload support via the facebook API
+
+# AWS Configuration, so we can have cli utilities that do/detect stuff on our backend, and for S3 stuff
+aws:
+  accessKey: no
+  secretKey: no
+
+# Database configuration
+databases:
+  core:
+    host: <%= @database['host'] == node.ipaddress ? 'localhost' : @database['host'] %>
+    name: <%= node.php_api.database_name %>
+    username: <%= node.php_api.database_username %>
+    password: <%= node.php_api.database_password %>
+  neo4j:
+    scheme: http
+    host: localhost
+    port: 7480
+    #username: root
+    #password: root
+  neo4j-contacts:
+    scheme: http
+    host: localhost
+    port: 7481
+unit_testing_databases:
+  core:
+    host: <%= @database['host'] == node.ipaddress ? 'localhost' : @database['host'] %>
+    name: <%= node.php_api.database_name %>_test
+    username: <%= node.php_api.database_username %>
+    password: <%= node.php_api.database_password %>
+  neo4j:
+    scheme: http
+    host: localhost
+    port: 7473
+    #username: root
+    #password: root
+  neo4j-contacts:
+      scheme: http
+      host: localhost
+      port: 7472
+
+# For cache
+memcached:
+  default_cache_time: 21600
+  servers:
+    one:
+      host: localhost
+      port: 11211
+  unit_testing_servers:
+    one:
+      host: localhost
+      port: 11212
+
+# RabbitMQ
+rabbitmq:
+  servers:
+    default:
+      host: localhost
+      port: 5670
+      user: sovolve
+      pass: sovolver
+      vhost: /
+    unit_testing_server:
+      host: localhost
+      port: 5673
+      user: guest
+      pass: guest
+      vhost: /
+  fallbackLog:
+    filepath: /tmp/rabbitmq_fallback.log
+
+# time logs
+log_buckets:
+  # conditions to log a run
+  persist:
+    worst_entry:
+      # the minimum duration in seconds of the worst entry to log a run (0.05 is the default value)
+      min_duration: 0.05
+      # the buckets to exclude when looking for worst entries
+      # here we don't want the API since it might agglomerate services
+      # the main bucket is excluded by default since it's the root one
+      exclude_buckets:
+        - api
+    # should we persist also entries without timing information?
+    persist_non_timed_entries: no
+    # if 2 directly following entries have a timestamp diff greater
+    # or equal to this, log the full run (there might be something stuck in between)
+    min_following_diff: 0.1
+
+  # all buckets configurations
+  buckets:
+    mysql: yes
+    neo4j: yes
+    rabbitmq: yes

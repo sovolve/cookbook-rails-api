@@ -4,6 +4,23 @@ site :opscode
 
 metadata
 
+cookbook "apt"
+cookbook "git"
+cookbook "build-essential"
+cookbook "vim"
+cookbook "curl", github: "phlipper/chef-curl"
+
+cookbook "chef-solo-search"
+cookbook "users"
+cookbook "sudo"
+
+cookbook "ssh", github: "markolson/chef-ssh"
+
+cookbook "apache2"
+cookbook "application"
+cookbook "application_php"
+cookbook "database"
+
 # This little bit of magick includes the cookbooks in the site-cookbooks directory too:
 def dependencies(path)
   berks = "#{path}/Berksfile"
