@@ -28,6 +28,8 @@ To shut down the VM at any time: `thor panomira:stop`
 ## Update
 To update the VM to the latest settings & codebase: `thor panomira:update`
 
+To update the VM and force a restart as well: `thor panomira:update true`
+
 ## Notes
 Chef will install the PHP version of the Panomira API to /data/web/php_api, following a capistrano-like deploy 
 process (with a releases folder & the current release symlinked to /current). Chef will automatically deploy the

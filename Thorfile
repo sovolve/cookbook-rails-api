@@ -18,12 +18,16 @@ class Panomira < Thor
   end
 
   desc "update", "update the virtual machine(s)"
-  def update
+  def update(restart = false)
     vagrant_setup
     run "cd #{base_path} && git pull"
     run "cd #{base_path} && bundle exec librarian-chef install"
     if vagrant_up?
-      run "vagrant provision"
+      if restart
+        run "vagrant reload --provision"
+      else
+        run "vagrant provision"
+      end
     else
       run "vagrant up --provision"
     end
