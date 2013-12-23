@@ -4,10 +4,35 @@
 
 require 'bundler'
 require 'bundler/setup'
-require 'berkshelf/thor'
 
-class ConcertHunt < Thor
+class Panomira < Thor
   include Thor::Actions
+
+  desc "go", "prepare, start, and provision the virtual machine(s)"
+  def go
+    vagrant_setup # Setup vagrant first!
+    run "cd #{base_path} && bundle exec librarian-chef install" unless File.exist? "#{base_path}/cookbooks/panomira_api"
+    unless vagrant_up?
+      run "vagrant up"
+    end
+  end
+
+  desc "update", "update the virtual machine(s)"
+  def update
+    vagrant_setup
+    run "cd #{base_path} && git pull"
+    run "cd #{base_path} && bundle exec librarian-chef install"
+    if vagrant_up?
+      run "vagrant provision"
+    else
+      run "vagrant up --provision"
+    end
+  end
+
+  desc "stop", "shut down virtual machines"
+  def stop
+    run "vagrant halt"
+  end
 
   desc "vagrant_setup", "install vagrant plugins"
   def vagrant_setup
@@ -22,7 +47,7 @@ class ConcertHunt < Thor
 
     plugins = `vagrant plugin list`.split("\n").map { |i| i.split(" ")[0] }
 
-    %w/vagrant-berkshelf vagrant-omnibus/.each do |plugin|
+    %w/vagrant-omnibus/.each do |plugin|
       run "vagrant plugin install #{plugin}" unless plugins.include? plugin
     end
   end
