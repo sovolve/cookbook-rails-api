@@ -5,7 +5,7 @@ site "http://community.opscode.com/api/v1"
 cookbook "apt"
 cookbook "git"
 cookbook "build-essential"
-cookbook "vim"
+cookbook "vim", "1.0.2"
 cookbook "curl", github: "phlipper/chef-curl"
 
 cookbook "chef-solo-search"
@@ -18,7 +18,7 @@ cookbook "php", "1.2.6" # PHP is a dependency of application_php, limiting it to
 cookbook "apache2"
 cookbook "memcached"
 cookbook "application"
-cookbook "application_php"
+cookbook "application_php", "2.0.0"
 cookbook "database"
 cookbook "neo4j-multi-server", github: "sovolve/cookbook-neo4j-multi-server"
 

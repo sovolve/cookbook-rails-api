@@ -15,37 +15,52 @@ end
 application "php_api" do
   name node.php_api.subdomain
   path node.php_api.path
-  #owner node.php_api.user
-  #group node.php_api.group
 
   repository node.php_api.repo
   revision node.php_api.revision
 
-  #migrate true
+  migrate true
   enable_submodules true
-
-  # Appears to support composer out of the box?
-  # TODO: Test, try to use.
-  #composer true
-  #composer_command "php composer.phar"
 
   # Install php curl extension so that composer can run:
   packages ["php5-curl", "php5-mysql"]
 
-  symlinks "development.yaml" => "config/development.yaml"
+  symlink_before_migrate "development.yaml" => "config/development.yaml"
 
   php do
-    migration_command "bin/phpmig"
+    migration_command "./bin/phpmig migrate"
     write_settings_file false
-
     database_master_role "php_mysql_master"
-    database do
-      #neo4j_main_host neo4j_main_host
-      #neo4j_main_port neo4j_main_node.neo4j.server.port
-    end
   end
 
+  # NOTE: This 'before_migrate' callback does a bunch of things, most of which are hacks because of
+  # issues with the php_application cookbook. Sepcifically, if you set a user to use then git auth fails
+  # because that user can't use a shared ssh credentials. So after we checkout the code we need to fix some
+  # permissions. Then we need to run composer, which php_application is _supposed_ to support, but that seems
+  # to be broken right now. Lastly we put a template in place so the php_api app knows how to connect to the
+  # databases, memcached etc. php_application has basic support for this, but we wanted to extend it.
+  # All of this could / should be refactored by either fixing / improving php_application cookbook, or moving
+  # some of this stuff to definitions and / or resources.
   before_migrate do
+    # Permissions hack:
+    directory node.php_api.path do
+      owner node.php_api.user
+      group node.php_api.group
+      recursive true
+    end
+    execute "fix_permissions" do
+      command "chown -R #{node.php_api.user}:#{node.php_api.group} #{node.php_api.path}"
+      cwd node.php_api.path
+    end
+
+    # Composer Hack:
+    execute 'php composer.phar install' do
+      cwd "#{new_resource.release_path}"
+      user node.php_api.user
+      group node.php_api.group
+    end
+
+    # App template hack:
     memcached = {}
     memcached_node = begin
       role = "php_memcached"
@@ -128,8 +143,8 @@ application "php_api" do
 
     template "#{new_resource.path}/shared/development.yaml" do
       source "app_env_config.yaml.erb"
-      owner new_resource.owner
-      group new_resource.group
+      owner node.php_api.user
+      group node.php_api.group
       mode "644"
       variables(
         :path => "#{new_resource.path}/current",
@@ -141,61 +156,9 @@ application "php_api" do
     end
   end
 
-  before_symlink do
-    directory node.php_api.path do
-      owner node.php_api.user
-      group node.php_api.group
-      recursive true
-    end
-    execute "fix_permissions" do
-      command "chown -R #{node.php_api.user}:#{node.php_api.group} #{node.php_api.path}"
-      cwd node.php_api.path
-    end
-  end
-
-  before_restart do
-    execute 'php composer.phar install' do
-      cwd "#{node.php_api.path}/current"
-      user node.php_api.user
-      group node.php_api.group
-    end
-  end
-
   mod_php_apache2 do
     app_root "/httpdocs"
     webapp_template "web_app.conf.erb"
     webapp_overrides allow_override: "All"
-  end
-end
-
-#def find_matching_role(role, single=true, &block)
-  #return nil if !role
-  #nodes = []
-  #if node['roles'].include? role
-    #nodes << node
-  #end
-  #if !single || nodes.empty?
-    #search(:node, "role:#{role} AND chef_environment:#{node.chef_environment}") do |n|
-      #nodes << n
-    #end
-  #end
-  #if block
-    #nodes.each do |n|
-      #yield n
-    #end
-  #else
-    #if single
-      #nodes.first
-    #else
-      #nodes
-    #end
-  #end
-#end
-
-def node_host(node)
-  if node.attribute?('cloud')
-    node['cloud']['local_ipv4']
-  else
-    node['ipaddress']
   end
 end
