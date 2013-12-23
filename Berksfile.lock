@@ -1,0 +1,105 @@
+{
+  "sources": {
+    "cookbook-panomira-api-rails": {
+      "path": "."
+    },
+    "apt": {
+      "locked_version": "2.3.0"
+    },
+    "git": {
+      "locked_version": "2.7.0"
+    },
+    "build-essential": {
+      "locked_version": "1.4.2"
+    },
+    "vim": {
+      "locked_version": "1.0.2"
+    },
+    "curl": {
+      "locked_version": "1.0.0",
+      "git": "git://github.com/phlipper/chef-curl.git",
+      "ref": "d1f6690319eb4e5278af0060eb053937541d8d90"
+    },
+    "chef-solo-search": {
+      "locked_version": "0.5.1",
+      "git": "git://github.com/edelight/chef-solo-search.git",
+      "ref": "63d6d016be9df48c3692dfd5b1e51820b2a3ac54"
+    },
+    "users": {
+      "locked_version": "1.6.0"
+    },
+    "sudo": {
+      "locked_version": "2.2.2"
+    },
+    "ssh": {
+      "locked_version": "0.6.5",
+      "git": "git://github.com/markolson/chef-ssh.git",
+      "ref": "52837a3f8c5e319d40f3dae917df329e6d95e7b3"
+    },
+    "apache2": {
+      "locked_version": "1.8.14"
+    },
+    "memcached": {
+      "locked_version": "1.7.0"
+    },
+    "application": {
+      "locked_version": "4.1.4"
+    },
+    "application_php": {
+      "locked_version": "2.0.0"
+    },
+    "database": {
+      "locked_version": "1.5.2"
+    },
+    "neo4j-multi-server": {
+      "locked_version": "1.0.0",
+      "git": "git://github.com/sovolve/cookbook-neo4j-multi-server.git",
+      "ref": "83389b75238a93ab9134e407740cf3c2cd673885"
+    },
+    "panomira_api": {
+      "path": "./site-cookbooks/panomira_api"
+    },
+    "dmg": {
+      "locked_version": "2.0.8"
+    },
+    "yum": {
+      "locked_version": "2.4.2"
+    },
+    "windows": {
+      "locked_version": "1.11.0"
+    },
+    "chef_handler": {
+      "locked_version": "1.1.4"
+    },
+    "runit": {
+      "locked_version": "1.4.0"
+    },
+    "yum-epel": {
+      "locked_version": "0.2.0"
+    },
+    "php": {
+      "locked_version": "1.2.6"
+    },
+    "xml": {
+      "locked_version": "1.2.0"
+    },
+    "mysql": {
+      "locked_version": "4.0.10"
+    },
+    "openssl": {
+      "locked_version": "1.1.0"
+    },
+    "postgresql": {
+      "locked_version": "3.3.4"
+    },
+    "aws": {
+      "locked_version": "1.0.0"
+    },
+    "xfs": {
+      "locked_version": "1.1.0"
+    },
+    "java": {
+      "locked_version": "1.15.4"
+    }
+  }
+}
