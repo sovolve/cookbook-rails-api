@@ -22,6 +22,7 @@ cookbook "application"
 cookbook "application_php"
 cookbook "database"
 cookbook "neo4j-multi-server", github: "sovolve/cookbook-neo4j-multi-server"
+cookbook "windows", "1.11.0"
 
 # This little bit of magick includes the cookbooks in the site-cookbooks directory too:
 def dependencies(path)
