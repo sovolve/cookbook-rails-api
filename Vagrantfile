@@ -42,7 +42,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.add_role "php_memcached"
     chef.add_role "php_mysql_master"
     chef.add_role "php_neo4j_main"
-    #chef.add_role "php_neo4j_contacts"
+    chef.add_role "php_neo4j_contacts"
     chef.add_role "php_webserver"
 
     chef.json = {

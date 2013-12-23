@@ -32,31 +32,91 @@ application "php_api" do
   # Install php curl extension so that composer can run:
   packages ["php5-curl", "php5-mysql"]
 
-  symlinks "chef_env_config.yaml" => "config/development.yaml"
+  symlinks "development.yaml" => "config/development.yaml"
 
   php do
     migration_command "bin/phpmig"
-
-    local_settings_file "chef_env_config.yaml"
-    settings_template "app_env_config.yaml.erb"
+    write_settings_file false
 
     database_master_role "php_mysql_master"
     database do
-      find_matching_role("memcached", true) do |memcached_node|
-        host = node_host memcached_node
-        host = (host == node.ipaddress) ? 'localhost' : host
+      #neo4j_main_host neo4j_main_host
+      #neo4j_main_port neo4j_main_node.neo4j.server.port
+    end
+  end
 
-        memcached_host host
-        memcached_port memcached_node.memcached.port
+  before_migrate do
+    memcached = {}
+    memcached_node = begin
+      role = "php_memcached"
+      if node['roles'].include? role
+        node
+      else
+        search(:node, "role:#{role} AND chef_environment:#{node.chef_environment}").first
       end
-
-      find_matching_role("php_neo4j_main", true) do |neo4j_main_node|
-        host = node_host neo4j_main_node
-        host = (host == node.ipaddress) ? 'localhost' : host
-
-        neo4j_main_host host
-        neo4j_main_port neo4j_main_node.neo4j.server.port
+    end
+    memcached[:host] =  begin
+      raise "No memcached node found!" unless memcached_node
+      host = if memcached_node.attribute?('cloud')
+        memcached_node['cloud']['local_ipv4']
+      else
+        memcached_node['ipaddress']
       end
+      (host && host == node.ipaddress) ? 'localhost' : host
+    end
+    memcached[:port] = memcached_node.memcached.port
+
+    neo4j_main = {}
+    neo4j_main_node = begin
+      role = "php_neo4j_main"
+      if node['roles'].include? role
+        node
+      else
+        search(:node, "role:#{role} AND chef_environment:#{node.chef_environment}").first
+      end
+    end
+    neo4j_main[:host] =  begin
+      raise "No neo4j_main node found!" unless neo4j_main_node
+      host = if neo4j_main_node.attribute?('cloud')
+        neo4j_main_node['cloud']['local_ipv4']
+      else
+        neo4j_main_node['ipaddress']
+      end
+      (host == node.ipaddress) ? 'localhost' : host
+    end
+    neo4j_main[:port] = neo4j_main_node.php_api.neo4j_main.port
+
+    mysql_main = {}
+    mysql_main_node = begin
+      role = "php_mysql_master"
+      if node['roles'].include? role
+        node
+      else
+        search(:node, "role:#{role} AND chef_environment:#{node.chef_environment}").first
+      end
+    end
+    mysql_main[:host] =  begin
+      raise "No php_myql_master node found!" unless mysql_main_node
+      host = if mysql_main_node.attribute?('cloud')
+        mysql_main_node['cloud']['local_ipv4']
+      else
+        mysql_main_node['ipaddress']
+      end
+      (host == node.ipaddress) ? 'localhost' : host
+    end
+    mysql_main[:port] = mysql_main_node.mysql.port
+
+    template "#{new_resource.path}/shared/development.yaml" do
+      source "app_env_config.yaml.erb"
+      owner new_resource.owner
+      group new_resource.group
+      mode "644"
+      variables(
+        :path => "#{new_resource.path}/current",
+        :database => mysql_main,
+        :memcached => memcached,
+        :neo4j_main => neo4j_main,
+      )
     end
   end
 
@@ -86,6 +146,30 @@ application "php_api" do
     webapp_overrides allow_override: "All"
   end
 end
+
+#def find_matching_role(role, single=true, &block)
+  #return nil if !role
+  #nodes = []
+  #if node['roles'].include? role
+    #nodes << node
+  #end
+  #if !single || nodes.empty?
+    #search(:node, "role:#{role} AND chef_environment:#{node.chef_environment}") do |n|
+      #nodes << n
+    #end
+  #end
+  #if block
+    #nodes.each do |n|
+      #yield n
+    #end
+  #else
+    #if single
+      #nodes.first
+    #else
+      #nodes
+    #end
+  #end
+#end
 
 def node_host(node)
   if node.attribute?('cloud')
