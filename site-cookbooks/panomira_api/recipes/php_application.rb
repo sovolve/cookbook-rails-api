@@ -86,6 +86,26 @@ application "php_api" do
     end
     neo4j_main[:port] = neo4j_main_node.php_api.neo4j_main.port
 
+    neo4j_contacts = {}
+    neo4j_contacts_node = begin
+      role = "php_neo4j_contacts"
+      if node['roles'].include? role
+        node
+      else
+        search(:node, "role:#{role} AND chef_environment:#{node.chef_environment}").first
+      end
+    end
+    neo4j_contacts[:host] =  begin
+      raise "No neo4j_contacts node found!" unless neo4j_contacts_node
+      host = if neo4j_contacts_node.attribute?('cloud')
+        neo4j_contacts_node['cloud']['local_ipv4']
+      else
+        neo4j_contacts_node['ipaddress']
+      end
+      (host == node.ipaddress) ? 'localhost' : host
+    end
+    neo4j_contacts[:port] = neo4j_contacts_node.php_api.neo4j_contacts.port
+
     mysql_main = {}
     mysql_main_node = begin
       role = "php_mysql_master"
@@ -116,6 +136,7 @@ application "php_api" do
         :database => mysql_main,
         :memcached => memcached,
         :neo4j_main => neo4j_main,
+        :neo4j_contacts => neo4j_contacts,
       )
     end
   end

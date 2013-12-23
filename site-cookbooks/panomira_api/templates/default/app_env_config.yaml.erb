@@ -48,8 +48,8 @@ databases:
     #password: root
   neo4j-contacts:
     scheme: http
-    host: localhost
-    port: 7481
+    host: <%= @neo4j_contacts[:host] %>
+    port: <%= @neo4j_contacts[:port] %>
 unit_testing_databases:
   core:
     host: <%= @database[:host] == node.ipaddress ? 'localhost' : @database[:host] %>
