@@ -1,0 +1,113 @@
+SITE
+  remote: http://community.opscode.com/api/v1
+  specs:
+    apache2 (1.8.14)
+    application (4.1.4)
+    application_php (1.1.2)
+      apache2 (>= 0.0.0)
+      php (>= 0.0.0)
+    apt (2.3.4)
+    aws (1.0.0)
+    build-essential (1.4.2)
+    chef-solo-search (0.5.1)
+    chef_handler (1.1.4)
+    database (1.6.0)
+      aws (>= 0.0.0)
+      mysql (>= 1.3.0)
+      postgresql (>= 1.0.0)
+      xfs (>= 0.0.0)
+    dmg (2.1.2)
+    git (2.9.0)
+      build-essential (>= 0.0.0)
+      dmg (>= 0.0.0)
+      runit (>= 1.0.0)
+      windows (>= 0.0.0)
+      yum (~> 3.0)
+      yum-epel (>= 0.0.0)
+    java (1.17.2)
+      aws (>= 0.0.0)
+      windows (>= 0.0.0)
+    memcached (1.7.0)
+      runit (~> 1.0)
+      yum (~> 3.0)
+      yum-epel (>= 0.0.0)
+    mysql (4.0.14)
+      build-essential (~> 1.4)
+      openssl (~> 1.1)
+    openssl (1.1.0)
+    php (1.2.6)
+      build-essential (>= 0.0.0)
+      mysql (>= 0.0.0)
+      xml (>= 0.0.0)
+    postgresql (3.3.4)
+      apt (>= 0.0.0)
+      build-essential (>= 0.0.0)
+      openssl (>= 0.0.0)
+    runit (1.5.3)
+      build-essential (>= 0.0.0)
+      yum (~> 3.0)
+      yum-epel (>= 0.0.0)
+    sudo (2.3.0)
+    users (1.6.0)
+    vim (1.1.0)
+    windows (1.11.0)
+      chef_handler (>= 0.0.0)
+    xfs (1.1.0)
+    xml (1.2.0)
+      build-essential (>= 0.0.0)
+    yum (3.0.2)
+    yum-epel (0.2.0)
+      yum (~> 3.0)
+
+GIT
+  remote: https://github.com/markolson/chef-ssh
+  ref: master
+  sha: 52837a3f8c5e319d40f3dae917df329e6d95e7b3
+  specs:
+    ssh (0.6.5)
+
+GIT
+  remote: https://github.com/phlipper/chef-curl
+  ref: master
+  sha: d1f6690319eb4e5278af0060eb053937541d8d90
+  specs:
+    curl (1.0.0)
+
+GIT
+  remote: https://github.com/sovolve/cookbook-neo4j-multi-server
+  ref: master
+  sha: 83389b75238a93ab9134e407740cf3c2cd673885
+  specs:
+    neo4j-multi-server (1.0.0)
+      java (>= 0.0.0)
+
+PATH
+  remote: /Users/alexwillemsma/Work/Sovolve/Panomira/rails_backend/code/cookbook-panomira-api-rails/site-cookbooks/panomira_api
+  specs:
+    panomira_api (0.1.0)
+      application (>= 0.0.0)
+      application_php (>= 0.0.0)
+      database (>= 0.0.0)
+      neo4j-multi-server (>= 0.0.0)
+      ssh (>= 0.0.0)
+
+DEPENDENCIES
+  apache2 (>= 0)
+  application (>= 0)
+  application_php (>= 0)
+  apt (>= 0)
+  build-essential (>= 0)
+  chef-solo-search (>= 0)
+  curl (>= 0)
+  database (>= 0)
+  git (>= 0)
+  memcached (>= 0)
+  neo4j-multi-server (>= 0)
+  panomira_api (>= 0)
+  php (= 1.2.6)
+  ssh (>= 0)
+  sudo (>= 0)
+  users (>= 0)
+  vim (>= 0)
+  windows (= 1.11.0)
+

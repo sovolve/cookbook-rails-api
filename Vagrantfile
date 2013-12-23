@@ -22,12 +22,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :private_network, ip: "192.168.33.42"
   config.ssh.forward_agent = true
 
-  # Configure berkshelf:
-  config.berkshelf.berksfile_path = "#{File.expand_path(File.dirname(__FILE__))}/Berksfile"
-  config.berkshelf.enabled = true
-
   config.vm.provision :chef_solo do |chef|
     #chef.encrypted_data_bag_secret_key_path = "#{File.expand_path(File.dirname(__FILE__))}/data_bag_key"
+    chef.cookbooks_path = "cookbooks"
     chef.roles_path = "roles"
     chef.data_bags_path = "data_bags"
     chef.environments_path = "environments"

@@ -1,8 +1,6 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
-site :opscode
-
-metadata
+site "http://community.opscode.com/api/v1"
 
 cookbook "apt"
 cookbook "git"
@@ -16,18 +14,21 @@ cookbook "sudo"
 
 cookbook "ssh", github: "markolson/chef-ssh"
 
+cookbook "php", "1.2.6" # PHP is a dependency of application_php, limiting it to 1.2.6 as 1.3 introduces windows support, and is broken.
 cookbook "apache2"
 cookbook "memcached"
 cookbook "application"
 cookbook "application_php"
 cookbook "database"
 cookbook "neo4j-multi-server", github: "sovolve/cookbook-neo4j-multi-server"
+
+# Technically, we don't need this. But there's some weirdness in librarian-chef that blows up without this line. Arg.
 cookbook "windows", "1.11.0"
 
 # This little bit of magick includes the cookbooks in the site-cookbooks directory too:
 def dependencies(path)
-  berks = "#{path}/Berksfile"
-  instance_eval(File.read(berks)) if File.exists?(berks)
+  cheffile = "#{path}/Cheffile"
+  instance_eval(File.read(cheffile)) if File.exists?(cheffile)
 end
 
 Dir.glob("#{File.expand_path(File.dirname(__FILE__))}/site-cookbooks/*").each do |path|
