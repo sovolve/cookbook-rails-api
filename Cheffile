@@ -31,7 +31,7 @@ def dependencies(path)
   instance_eval(File.read(cheffile)) if File.exists?(cheffile)
 end
 
-Dir.glob("#{File.expand_path(File.dirname(__FILE__))}/site-cookbooks/*").each do |path|
+Dir.glob("site-cookbooks/*").each do |path|
   dependencies path
   cookbook File.basename(path), :path => path
 end

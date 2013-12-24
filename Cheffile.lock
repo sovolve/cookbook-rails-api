@@ -83,7 +83,7 @@ GIT
       java (>= 0.0.0)
 
 PATH
-  remote: /Users/alexwillemsma/Work/Sovolve/Panomira/rails_backend/code/cookbook-panomira-api-rails/site-cookbooks/panomira_api
+  remote: site-cookbooks/panomira_api
   specs:
     panomira_api (0.1.0)
       application (>= 0.0.0)
