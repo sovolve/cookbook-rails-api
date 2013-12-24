@@ -23,4 +23,4 @@ default['neo4j']['server']['https']['enabled'] = false
 
 # Will be used to determine which users should
 # be checked for 'homesick' configs:
-default['users'] = ['alex', 'mike']
+default['users'] = ['alex', 'mike', 'jason']

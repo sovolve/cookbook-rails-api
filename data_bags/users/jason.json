@@ -1,0 +1,19 @@
+{
+  "name":"data_bag_item_users_jason",
+  "json_class":"Chef::DataBagItem",
+  "chef_type":"data_bag_item",
+  "data_bag":"users",
+  "raw_data":{
+    "id":"jason",
+    "ssh_keys":[
+      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDZ6D8P62s+pVfhVn0UAHuSpHNvHJbwR/7xJtHRIixPn7kqP2I7fm8E1Cn77sq4EC8PPvkWybbR1GUMyjO/mZ6M5lK5FN5+f3YMy85MToVzNJcYhnofji63HL92U4ROHXpQFU6ZZIuUGdm+iB4y6vLIgk+6EtiybSB+ylc0eRTk/+s2oQx9ATDcFjPLF15XCjaosidpJlHuOOzRDp8Ukvzaule63pRww/EYIaCQufHRjCivNOfNOM2kQcyoBsIF0/QnHGzmkA9qoIq60oRuGSHf6yGHeNevniFykQ4pqfZLKpBx3mLnsfHUe+Vk1bDZlz9BShxeTZAB1FaHm2f+WWS3 jason@sovolve.com"
+    ],
+    "groups":[
+      "sysadmin",
+      "dba",
+      "devops",
+      "deploy"
+    ],
+    "shell":"/bin/bash"
+  }
+}
