@@ -1,0 +1,19 @@
+{
+  "name":"data_bag_item_users_mike",
+  "json_class":"Chef::DataBagItem",
+  "chef_type":"data_bag_item",
+  "data_bag":"users",
+  "raw_data":{
+    "id":"mike",
+    "ssh_keys":[
+      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDPFjGcUR6Nj0WzcuBPrbxQUm3vJuAXcxOZJ22TF56GNJ/7Ux/y8OspdYZ+Txuyq6zlgc9WLEk6N2KjT802Ls/lOR+2PPPiplFSbqwdPnQJ5ej01fKGUZLakY3cv0eJxq0e3qlkrZyVmoeXOo9MCn3IB5NNahkhDXess1Jz/7wuySiGU6oTjNp5dz68TvkrzDjqAxbl5Gjos7FwDikOBMlsSab2gK8Ofp1AFuv2delpKaQcE2dXhEx/a9SiCMmYIncL0Zsuk7H9EJtWGUzCRgeIL+yyDWr2SV6n4HTEqQnBrmMrqAQ0DkSH90eVTnb/1KFupiK30K/yqIK0aVkX1UabsT/Yj5/7sQ8cfs9tsXUra2FnCb+HFereiJudIOm/QBaZDo9CN2ZSLdgn3Jk5JCXE01ihVEnh61Zy7s91w5ONSFMEd4YQvhfGAaN1ZRgQZXCgGrAfqbVmONN2dXM4X5INMOksyj4Hr1VTRcQ97x3ofp/l+A/3GkwAzKNNL088h6MoNzQU6SXRyeIjMmQJX6sZeV3mE18ErD4reTAKuYPCMyIy5n2vxIYWbXIHKOxplA4U5CumQk8yUaioq5L7SA+YUobBaF54BTpn/iKYk+Dt3EJYDTYOixTRY3A+T1X6sQp0ciQarQYbl0/o+w5C4y9FHkWM1m4/AWK25YpCSk4xEQ== Mike"
+    ],
+    "groups":[
+      "sysadmin",
+      "dba",
+      "devops",
+      "deploy"
+    ],
+    "shell":"/bin/bash"
+  }
+}
