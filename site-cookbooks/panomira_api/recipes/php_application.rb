@@ -26,7 +26,7 @@ application "php_api" do
   enable_submodules true
 
   # Install php curl extension so that composer can run:
-  packages ["php5-curl", "php5-mysql"]
+  packages ["php5-curl", "php5-mysql", "php5-memcached"]
 
   symlink_before_migrate "development.yaml" => "config/development.yaml"
 
