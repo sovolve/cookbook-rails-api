@@ -63,7 +63,7 @@ SITE
 GIT
   remote: https://github.com/markolson/chef-ssh
   ref: master
-  sha: 52837a3f8c5e319d40f3dae917df329e6d95e7b3
+  sha: 468990595e0040ca21b90ef0e67a35b009e1e743
   specs:
     ssh (0.6.5)
 
@@ -77,7 +77,7 @@ GIT
 GIT
   remote: https://github.com/sovolve/cookbook-neo4j-multi-server
   ref: master
-  sha: 83389b75238a93ab9134e407740cf3c2cd673885
+  sha: 4ebcf9456c28bb956032c3f8723ce559c1e5c74b
   specs:
     neo4j-multi-server (1.0.0)
       java (>= 0.0.0)
