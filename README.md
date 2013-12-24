@@ -2,7 +2,7 @@
 
 # Requirements
 
-- Install [Ruby](https://www.ruby-lang.org/en/downloads/) (most Mac / Linux boxes probably already have Ruby).
+- Install [Ruby](https://www.ruby-lang.org/en/downloads/) and [Bundler](http://bundler.io/) (most Mac / Linux boxes probably already have Ruby).
 - Install [Vagrant](http://www.vagrantup.com/downloads.html)
 - Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) or [VMWare](http://www.vmware.com/products/fusion/)
 - Clone this repo `git clone git@github.com:sovolve/cookbook-rails-api.git`
