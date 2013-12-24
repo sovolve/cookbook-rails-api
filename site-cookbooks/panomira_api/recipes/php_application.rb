@@ -45,13 +45,26 @@ application "php_api" do
   # some of this stuff to definitions and / or resources.
   before_migrate do
     # Composer Hack:
-    execute 'php composer.phar install' do
-      cwd "#{new_resource.release_path}"
-      user node.php_api.user
-      group node.php_api.group
+    Chef::Log.info 'Running composer install'
+    directory "#{new_resource.path}/shared/vendor" do
+      owner new_resource.owner
+      group new_resource.group
+      mode 0755
+    end
+    directory "#{new_resource.release_path}/vendor" do
+      action :delete
+      recursive true
+    end
+    link "#{new_resource.release_path}/vendor" do
+      to "#{new_resource.path}/shared/vendor"
+    end
+    execute "php composer.phar install -n -q" do
+      cwd new_resource.release_path
+      user new_resource.owner
     end
 
     # App template hack:
+    Chef::Log.info "Creating development.yaml"
     memcached = {}
     memcached_node = begin
       role = "php_memcached"
