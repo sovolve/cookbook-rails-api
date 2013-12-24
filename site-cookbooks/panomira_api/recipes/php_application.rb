@@ -37,11 +37,10 @@ application "php_api" do
   end
 
   # NOTE: This 'before_migrate' callback does a bunch of things, most of which are hacks because of
-  # issues with the php_application cookbook. Sepcifically, if you set a user to use then git auth fails
-  # because that user can't use a shared ssh credentials. So after we checkout the code we need to fix some
-  # permissions. Then we need to run composer, which php_application is _supposed_ to support, but that seems
-  # to be broken right now. Lastly we put a template in place so the php_api app knows how to connect to the
-  # databases, memcached etc. php_application has basic support for this, but we wanted to extend it.
+  # issues with the php_application cookbook. Then we need to run composer, which php_application is 
+  # _supposed_ to support, but that seems to be broken right now. Lastly we put a template in place 
+  # so the php_api app knows how to connect to the databases, memcached etc. php_application has 
+  # basic support for this, but we wanted to extend it.
   # All of this could / should be refactored by either fixing / improving php_application cookbook, or moving
   # some of this stuff to definitions and / or resources.
   before_migrate do
