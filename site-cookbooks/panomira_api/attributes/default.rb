@@ -20,3 +20,7 @@ default['mysql']['remove_anonymous_users'] = true
 default['mysql']['remove_test_database'] = true
 
 default['neo4j']['server']['https']['enabled'] = false
+
+# Will be used to determine which users should
+# be checked for 'homesick' configs:
+default['users'] = ['alex', 'mike']

@@ -21,6 +21,7 @@ cookbook "application"
 cookbook "application_php", "2.0.0"
 cookbook "database"
 cookbook "neo4j-multi-server", github: "sovolve/cookbook-neo4j-multi-server", ref: "7b67357043ad7962b06883e215f8a275efe72c5d"
+cookbook "homesick"
 
 # Technically, we don't need this. But there's some weirdness in librarian-chef that blows up without this line. Arg.
 cookbook "windows", "1.11.0"

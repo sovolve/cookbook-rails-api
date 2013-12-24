@@ -6,6 +6,7 @@ run_list(
   "recipe[sudo]",
   "recipe[apt]",
   "recipe[git]",
+  "recipe[homesick::data_bag]",
   "recipe[build-essential]",
   "recipe[vim]",
   "recipe[curl]",
