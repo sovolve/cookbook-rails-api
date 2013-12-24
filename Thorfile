@@ -10,7 +10,7 @@ class Panomira < Thor
 
   desc "go", "prepare, start, and provision the virtual machine(s)"
   def go
-    vagrant_setup # Setup vagrant first!
+    setup
     run "cd #{base_path} && bundle exec librarian-chef install" unless File.exist? "#{base_path}/cookbooks/panomira_api"
     unless vagrant_up?
       run "vagrant up"
@@ -19,7 +19,7 @@ class Panomira < Thor
 
   desc "update", "update the virtual machine(s)"
   def update(restart = false)
-    vagrant_setup
+    setup
     run "cd #{base_path} && git pull"
     run "cd #{base_path} && bundle exec librarian-chef install"
     if vagrant_up?
@@ -57,6 +57,15 @@ class Panomira < Thor
   end
 
   private
+
+  def setup
+    ensure_data_bag_key
+    vagrant_setup
+  end
+
+  def ensure_data_bag_key
+    raise StandardError.new "You do not appear to have the data_bag_key. This key is NOT included in the repo, and must be sourced from either Alex W. or Gabe. It MUST be placed at the root of the cookbook-panomira-api-rails repository (where the README.md file is) and MUST be named data_bag_key, with no extension." unless File.exist? "#{base_path}/data_bag_key"
+  end
 
   def vagrant_up?
     `vagrant status default` =~ /running/
