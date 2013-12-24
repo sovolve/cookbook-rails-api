@@ -15,3 +15,11 @@ directory "/home/#{node.php_api.user}/.ssh" do
   group node.php_api.group
   recursive true
 end
+
+git_key = Chef::EncryptedDataBagItem.load("git_keys", node.php_api.user)
+file "/home/#{node.php_api.user}/.ssh/id_rsa" do
+  content git_key[:private_key]
+end
+file "/home/#{node.php_api.user}/.ssh/id_rsa.pub" do
+  content git_key[:public_key]
+end

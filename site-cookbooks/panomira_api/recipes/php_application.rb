@@ -16,6 +16,9 @@ application "php_api" do
   name node.php_api.subdomain
   path node.php_api.path
 
+  owner node.php_api.user
+  group node.php_api.group
+
   repository node.php_api.repo
   revision node.php_api.revision
 
@@ -42,17 +45,6 @@ application "php_api" do
   # All of this could / should be refactored by either fixing / improving php_application cookbook, or moving
   # some of this stuff to definitions and / or resources.
   before_migrate do
-    # Permissions hack:
-    directory node.php_api.path do
-      owner node.php_api.user
-      group node.php_api.group
-      recursive true
-    end
-    execute "fix_permissions" do
-      command "chown -R #{node.php_api.user}:#{node.php_api.group} #{node.php_api.path}"
-      cwd node.php_api.path
-    end
-
     # Composer Hack:
     execute 'php composer.phar install' do
       cwd "#{new_resource.release_path}"

@@ -2,7 +2,8 @@
 
 # Requirements
 
-- Configure [SSH access to GitHub](https://help.github.com/articles/generating-ssh-keys) and ensure you have permissions to access the [panomira php api repository](https://github.com/sovolve/panomira-api)
+- You will need the data_bag_key file in order to use this repository. Please talk to Gabe or Alex W to get it. Once
+you've gotten this file, it needs to be placed in the root directory (alongside this README) and _must_ be named data_bag_key (with no extension).
 - Install [Vagrant](http://www.vagrantup.com/downloads.html)
 - Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) or [VMWare](http://www.vmware.com/products/fusion/)
 - Clone this repo `git clone git@github.com:sovolve/cookbook-rails-api.git`

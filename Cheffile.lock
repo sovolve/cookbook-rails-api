@@ -76,8 +76,8 @@ GIT
 
 GIT
   remote: https://github.com/sovolve/cookbook-neo4j-multi-server
-  ref: master
-  sha: 4ebcf9456c28bb956032c3f8723ce559c1e5c74b
+  ref: 7b67357043ad7962b06883e215f8a275efe72c5d
+  sha: 7b67357043ad7962b06883e215f8a275efe72c5d
   specs:
     neo4j-multi-server (1.0.0)
       java (>= 0.0.0)
