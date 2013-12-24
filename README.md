@@ -2,11 +2,12 @@
 
 # Requirements
 
-- You will need the data_bag_key file in order to use this repository. Please talk to Gabe or Alex W to get it. Once
-you've gotten this file, it needs to be placed in the root directory (alongside this README) and _must_ be named data_bag_key (with no extension).
+- Install [Ruby](https://www.ruby-lang.org/en/downloads/) (most Mac / Linux boxes probably already have Ruby).
 - Install [Vagrant](http://www.vagrantup.com/downloads.html)
 - Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) or [VMWare](http://www.vmware.com/products/fusion/)
 - Clone this repo `git clone git@github.com:sovolve/cookbook-rails-api.git`
+- You will need the data_bag_key file in order to use this repository. Please talk to Gabe or Alex W to get it. Once
+you've gotten this file, it needs to be placed in the root directory (alongside this README) and _must_ be named data_bag_key (with no extension).
 - Run bundle install: `bundle install`
 - Prep and start the vm: `thor panomira:go`
 - Get a coffee. Initial creation of the VM involves downloading several large files... it's going to take a while.
