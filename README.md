@@ -2,6 +2,7 @@
 
 # Requirements
 
+- Configure [SSH access to GitHub](https://help.github.com/articles/generating-ssh-keys) and ensure you have permissions to access the [panomira php api repository](https://github.com/sovolve/panomira-api)
 - Install [Vagrant](http://www.vagrantup.com/downloads.html)
 - Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) or [VMWare](http://www.vmware.com/products/fusion/)
 - Clone this repo `git clone git@github.com:sovolve/cookbook-rails-api.git`
