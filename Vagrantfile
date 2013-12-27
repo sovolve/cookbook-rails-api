@@ -28,19 +28,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.roles_path = "roles"
     chef.data_bags_path = "data_bags"
     chef.environments_path = "environments"
-    chef.environment = "local_dev"
 
-    # Includes chef-solo search, which is used by the user recipe. This
-    # _must_ be before the roles, so that it's run first, otherwise it
-    # won't be available to all recipes.
-    chef.add_recipe "chef-solo-search"
+    # Vagrant VM's run in the "development" environment, which is configured
+    # for local develelopment environments.
+    chef.environment = "development"
 
-    chef.add_role "vm_base" # Specific role for VM's, sets up users, permissions etc.
-    chef.add_role "php_memcached"
-    chef.add_role "php_mysql_master"
-    chef.add_role "php_neo4j_main"
-    chef.add_role "php_neo4j_contacts"
-    chef.add_role "php_webserver"
+    chef.add_role "vagrant_base" # Includes the "base" role, which does most of the setup for us.
+    chef.add_role "php_single_server" # Loads the whole stack required to run the PHP API on one server.
 
     chef.json = {
       :mysql => {

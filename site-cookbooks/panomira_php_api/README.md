@@ -1,4 +1,4 @@
-# panomira_api cookbook
+# panomira_php_api cookbook
 
 # Requirements
 

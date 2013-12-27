@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: panomira_api
+# Cookbook Name:: panomira_php_api
 # Recipe:: apt_setup
 #
 # Copyright (C) 2013 Sovolve

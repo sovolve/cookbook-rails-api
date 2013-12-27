@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: panomira_api
+# Cookbook Name:: panomira_php_api
 # Recipe:: php_neo4j_contacts
 #
 # Copyright (C) 2013 Sovolve

@@ -11,7 +11,7 @@ class Panomira < Thor
   desc "go", "prepare, start, and provision the virtual machine(s)"
   def go
     setup
-    run "cd #{base_path} && bundle exec librarian-chef install" unless File.exist? "#{base_path}/cookbooks/panomira_api"
+    run "cd #{base_path} && bundle exec librarian-chef install" unless File.exist? "#{base_path}/cookbooks/panomira_php_api"
     unless vagrant_up?
       run "vagrant up"
     end

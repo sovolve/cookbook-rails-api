@@ -7,7 +7,6 @@ default["php_api"].tap do |php_api|
   php_api["subdomain"] = "php_api"
 
   php_api["repo"] = "git@github.com:sovolve/panomira-api.git"
-  php_api["revision"] = "develop"
 
   php_api["database_name"] = "panomira_php_api"
   php_api["database_username"] = "mysql_php_api"

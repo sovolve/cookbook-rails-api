@@ -85,9 +85,9 @@ GIT
       java (>= 0.0.0)
 
 PATH
-  remote: site-cookbooks/panomira_api
+  remote: site-cookbooks/panomira_php_api
   specs:
-    panomira_api (0.1.0)
+    panomira_php_api (0.1.0)
       application (>= 0.0.0)
       application_php (>= 0.0.0)
       database (>= 0.0.0)
@@ -107,7 +107,7 @@ DEPENDENCIES
   homesick (>= 0)
   memcached (>= 0)
   neo4j-multi-server (>= 0)
-  panomira_api (>= 0)
+  panomira_php_api (>= 0)
   php (= 1.2.6)
   ssh (>= 0)
   sudo (>= 0)

@@ -1,3 +1,11 @@
+# Cookbook Name:: panomira_php_api
+# Recipe:: apt_setup
+#
+# Copyright (C) 2013 Sovolve
+# 
+# All rights reserved - Do Not Redistribute
+#
+
 group node.php_api.group do
   action :create
 end

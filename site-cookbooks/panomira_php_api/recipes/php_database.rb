@@ -1,3 +1,12 @@
+#
+# Cookbook Name:: panomira_php_api
+# Recipe:: php_database
+#
+# Copyright (C) 2013 Sovolve
+# 
+# All rights reserved - Do Not Redistribute
+#
+
 include_recipe "database::mysql"
 
 connection_info = {:host => "localhost", :username => 'root', :password => node['mysql']['server_root_password']}

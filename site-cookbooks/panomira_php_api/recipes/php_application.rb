@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: panomira_api
+# Cookbook Name:: panomira_php_api
 # Recipe:: php_application
 #
 # Copyright (C) 2013 Sovolve
@@ -20,14 +20,19 @@ application "php_api" do
   group node.php_api.group
 
   repository node.php_api.repo
-  revision node.php_api.revision
+  revision (['production', 'beta'].include? node.chef_environment) ? 'master' : 'develop'
+  environment "SO_ENVIRONMENT" => node.chef_environment
 
   migrate true
   enable_submodules true
 
-  # Install php curl extension so that composer can run:
+  # NOTE: Packages to install (with package manager). These are set up to install php extensions,
+  # and work on ubuntu. May need to change to support other platforms.
   packages ["php5-curl", "php5-mysql", "php5-memcached"]
 
+  # Syslinks the development.yaml file (which will be created in the before_migrate callback) into
+  # place, providing the PHP api with db, mysql, and neo4j connection info. NOTE: THis WILL overwrite
+  # the development.yaml file present in the repo!
   symlink_before_migrate "development.yaml" => "config/development.yaml"
 
   php do

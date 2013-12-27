@@ -3,5 +3,5 @@ description "Installs a database master to serve the Panomira PHP API."
 
 run_list(
   "recipe[mysql::server]",
-  "recipe[panomira_api::php_database]"
+  "recipe[panomira_php_api::php_database]"
 )
