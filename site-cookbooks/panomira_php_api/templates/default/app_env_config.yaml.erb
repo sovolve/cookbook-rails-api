@@ -34,7 +34,7 @@ aws:
 # Database configuration
 databases:
   core:
-    host: <%= @database[:host] == node.ipaddress ? 'localhost' : @database[:host] %>
+    host: <%= @database[:host] %>
     name: <%= node.php_api.database_name %>
     username: <%= node.php_api.database_username %>
     password: <%= node.php_api.database_password %>
@@ -42,15 +42,13 @@ databases:
     scheme: http
     host: <%= @neo4j_main[:host] %>
     port: <%= @neo4j_main[:port] %>
-    #username: root
-    #password: root
   neo4j-contacts:
     scheme: http
     host: <%= @neo4j_contacts[:host] %>
     port: <%= @neo4j_contacts[:port] %>
 unit_testing_databases:
   core:
-    host: <%= @database[:host] == node.ipaddress ? 'localhost' : @database[:host] %>
+    host: <%= @database[:host] %>
     name: <%= node.php_api.database_name %>_test
     username: <%= node.php_api.database_username %>
     password: <%= node.php_api.database_password %>
@@ -58,12 +56,10 @@ unit_testing_databases:
     scheme: http
     host: localhost
     port: 7473
-    #username: root
-    #password: root
   neo4j-contacts:
-      scheme: http
-      host: localhost
-      port: 7472
+    scheme: http
+    host: localhost
+    port: 7472
 
 # For cache
 memcached:
