@@ -53,7 +53,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  config.vm.define "rails_api" do |rails_api|
+  config.vm.define "rails_api", primary: true do |rails_api|
     # Assign this VM to a host-only network IP, allowing you to access it
     # via the IP. Host-only networks can talk to the host machine as well as
     # any other machines on the same network, but cannot be accessed (through this

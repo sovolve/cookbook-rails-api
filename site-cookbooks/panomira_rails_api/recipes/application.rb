@@ -23,17 +23,17 @@ memcached = {}
 memcached[:host] = host_from_node memcached_node
 memcached[:port] = memcached_node.memcached.port if memcached_node
 
-neo4j_main_node = node_by_role("php_neo4j_main", environment_string)
+neo4j_main_node = node_by_role("rails_neo4j_main", environment_string)
 neo4j_main = {}
 neo4j_main[:host] = host_from_node neo4j_main_node
 neo4j_main[:port] = neo4j_main_node.rails_api.neo4j_main.port
 
-neo4j_contacts_node = node_by_role("php_neo4j_contacts", environment_string) 
+neo4j_contacts_node = node_by_role("rails_neo4j_contacts", environment_string) 
 neo4j_contacts = {}
 neo4j_contacts[:host] = host_from_node neo4j_contacts_node
 neo4j_contacts[:port] = neo4j_contacts_node.rails_api.neo4j_contacts.port
 
-mysql_master_node = node_by_role("php_mysql_master", environment_string)
+mysql_master_node = node_by_role("rails_db_master", environment_string)
 mysql_master = {}
 mysql_master[:host] = host_from_node mysql_master_node 
 

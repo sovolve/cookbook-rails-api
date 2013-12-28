@@ -22,14 +22,14 @@ class Panomira < Thor
     setup
     run "cd #{base_path} && git pull"
     run "cd #{base_path} && bundle exec librarian-chef install"
-    if vagrant_up?
+    if vagrant_up? 'rails_api'
       if restart
         run "vagrant reload --provision"
       else
-        run "vagrant provision"
+        run "vagrant provision rails_api"
       end
     else
-      run "vagrant up --provision"
+      run "vagrant up rails_api --provision"
     end
   end
 
@@ -67,8 +67,8 @@ class Panomira < Thor
     raise StandardError.new "You do not appear to have the data_bag_key. This key is NOT included in the repo, and must be sourced from either Alex W. or Gabe. It MUST be placed at the root of the cookbook-panomira-api-rails repository (where the README.md file is) and MUST be named data_bag_key, with no extension." unless File.exist? "#{base_path}/data_bag_key"
   end
 
-  def vagrant_up?
-    `vagrant status default` =~ /running/
+  def vagrant_up? (machine_name = 'default')
+    `vagrant status #{machine_name}` =~ /running/
   end
 
   def base_path
