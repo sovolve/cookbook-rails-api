@@ -3,7 +3,6 @@ description "Vagrant Base role, includes base role, and adds overrides so that t
 
 run_list(
   "recipe[chef-solo-search]", # This MUST be included first if used. Included here as it's assumed that vagrant VM's will be managed using chef-solo.
-  "role[base]",
 )
 
 override_attributes(

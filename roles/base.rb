@@ -10,6 +10,8 @@ run_list(
   "recipe[build-essential]",
   "recipe[vim]",
   "recipe[curl]",
-  "recipe[panomira_php_api::users]",
-  "recipe[panomira_php_api::apt_setup]",
+)
+
+override_attributes(
+  users: ['alex', 'mike', 'jason'], # Used by homesick to determine which users to setup homesick for.
 )

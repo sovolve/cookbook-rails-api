@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: panomira_php_api
-# Recipe:: php_neo4j_main
+# Recipe:: neo4j_main
 #
 # Copyright (C) 2013 Sovolve
 # 

@@ -33,7 +33,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # for local develelopment environments.
     chef.environment = "development"
 
-    chef.add_role "vagrant_base" # Includes the "base" role, which does most of the setup for us.
+    chef.add_role "vagrant_base" # Does vagrant specific config. Would be left off when provisioning a non-vagrant server.
     chef.add_role "php_single_server" # Loads the whole stack required to run the PHP API on one server.
 
     chef.json = {

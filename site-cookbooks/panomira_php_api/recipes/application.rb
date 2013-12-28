@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: panomira_php_api
-# Recipe:: php_application
+# Recipe:: application
 #
 # Copyright (C) 2013 Sovolve
 # 
@@ -18,7 +18,7 @@ environment_string = node["php_api"]["environment"] || node.chef_environment
 
 # Lookup related nodes, and determine some information about them (mostly host & port)
 # so that we can use them to configure the app.
-memcached_node = node_by_role("php_memcached", environment_string)
+memcached_node = node_by_role("memcached", environment_string)
 memcached = {}
 memcached[:host] = host_from_node memcached_node
 memcached[:port] = memcached_node.memcached.port if memcached_node
@@ -36,6 +36,9 @@ neo4j_contacts[:port] = neo4j_contacts_node.php_api.neo4j_contacts.port
 mysql_master_node = node_by_role("php_mysql_master", environment_string)
 mysql_master = {}
 mysql_master[:host] = host_from_node mysql_master_node 
+
+include_recipe "panomira_php_api::apt_setup"
+include_recipe "panomira_php_api::users"
 
 application "php_api" do
   name node.php_api.subdomain

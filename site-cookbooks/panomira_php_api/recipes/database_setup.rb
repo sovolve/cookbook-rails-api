@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: panomira_php_api
-# Recipe:: php_database
+# Recipe:: database_setup
 #
 # Copyright (C) 2013 Sovolve
 # 
