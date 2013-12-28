@@ -38,6 +38,8 @@ mysql_master = {}
 mysql_master[:host] = host_from_node mysql_master_node 
 
 include_recipe "panomira_rails_api::users"
+include_recipe "rvm::system"
+include_recipe "rvm::gem_package"
 
 application "rails_api" do
   name node.rails_api.subdomain

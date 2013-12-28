@@ -18,6 +18,7 @@ SITE
     aws (1.0.0)
     build-essential (1.4.2)
     chef-solo-search (0.5.1)
+    chef_gem (0.1.0)
     chef_handler (1.1.4)
     database (1.6.0)
       aws (>= 0.0.0)
@@ -73,6 +74,14 @@ SITE
     yum (3.0.2)
     yum-epel (0.2.0)
       yum (~> 3.0)
+
+GIT
+  remote: git://github.com/fnichol/chef-rvm.git
+  ref: master
+  sha: 0cd320911c1e568cbf2eeac895a5ef06e5821589
+  specs:
+    rvm (0.9.1)
+      chef_gem (>= 0.0.0)
 
 GIT
   remote: https://github.com/markolson/chef-ssh
@@ -132,6 +141,7 @@ DEPENDENCIES
   panomira_php_api (>= 0)
   panomira_rails_api (>= 0)
   php (= 1.2.6)
+  rvm (>= 0)
   ssh (>= 0)
   sudo (>= 0)
   users (>= 0)

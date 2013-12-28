@@ -2,6 +2,7 @@ name "php_webserver"
 description "Installs a webserver to serve the Panomira PHP API."
 
 run_list(
+  "role[base]",
   "recipe[apache2]",
   "recipe[panomira_php_api::application]",
 )
