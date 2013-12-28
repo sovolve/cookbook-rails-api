@@ -43,4 +43,4 @@ the VM, please make changes and commit / merge them to the develop branch on the
 
 # Author
 
-Author:: Alex Willemsma (<alex@sovolve.com>)
+Author:: Alex Willemsma (<alex@sovolve.com>) [![endorse](https://api.coderwall.com/wandring_spirit/endorsecount.png)](https://coderwall.com/wandring_spirit)
