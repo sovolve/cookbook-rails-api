@@ -56,6 +56,18 @@ application "rails_api" do
 
   environment "SO_ENVIRONMENT" => environment_string
 
-  migrate true
+  # TODO: Enable & debug.
+  #migrate true
   enable_submodules true
+
+  rails do
+    gems "bundler" => nil, "rails" => {:version => "4.0.2"}
+    bundle_command ". /etc/profile.d/rvm.sh; bundle"
+    bundle_options "2>&1 | tee -a /var/log/bundler.log"
+    database_master_role "rails_db_master"
+  end
+
+  memcached do
+    role "memcached"
+  end
 end

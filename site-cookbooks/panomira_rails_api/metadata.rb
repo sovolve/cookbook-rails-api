@@ -8,5 +8,6 @@ version          '0.1.0'
 
 depends "ssh"
 depends "application"
+depends "application_ruby"
 depends "database"
 depends "neo4j-multi-server"
