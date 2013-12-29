@@ -8,6 +8,6 @@
 #
 
 neo4j_server do
-  instance_name 'main'
+  instance_name 'rails_main'
   port node.rails_api.neo4j_main.port
 end

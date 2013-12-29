@@ -8,6 +8,6 @@
 #
 
 neo4j_server do
-  instance_name 'contacts'
+  instance_name 'php_contacts'
   port node.php_api.neo4j_contacts.port
 end

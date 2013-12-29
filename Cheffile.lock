@@ -2,18 +2,7 @@ SITE
   remote: http://community.opscode.com/api/v1
   specs:
     apache2 (1.8.14)
-    application (3.0.0)
-    application_php (2.0.0)
-      apache2 (>= 0.0.0)
-      application (~> 3.0)
-      php (>= 0.0.0)
-    application_ruby (2.1.4)
-      apache2 (>= 0.0.0)
-      application (~> 3.0)
-      logrotate (~> 1.0)
-      passenger_apache2 (>= 0.0.0)
-      runit (~> 1.0)
-      unicorn (>= 0.0.0)
+    application (4.1.4)
     apt (2.3.4)
     aws (1.0.0)
     build-essential (1.4.2)
@@ -58,7 +47,7 @@ SITE
       apt (>= 0.0.0)
       build-essential (>= 0.0.0)
       openssl (>= 0.0.0)
-    runit (1.5.3)
+    runit (1.5.8)
       build-essential (>= 0.0.0)
       yum (~> 3.0)
       yum-epel (>= 0.0.0)
@@ -98,12 +87,35 @@ GIT
     curl (1.0.0)
 
 GIT
+  remote: https://github.com/poise/application_ruby
+  ref: master
+  sha: f073ae50a58db1a0d496290888da457ee63244c8
+  specs:
+    application_ruby (3.0.2)
+      apache2 (>= 0.0.0)
+      application (~> 4.0)
+      logrotate (~> 1.0)
+      passenger_apache2 (>= 0.0.0)
+      runit (~> 1.0)
+      unicorn (>= 0.0.0)
+
+GIT
   remote: https://github.com/sovolve/cookbook-neo4j-multi-server
   ref: 7b67357043ad7962b06883e215f8a275efe72c5d
   sha: 7b67357043ad7962b06883e215f8a275efe72c5d
   specs:
     neo4j-multi-server (1.0.0)
       java (>= 0.0.0)
+
+GIT
+  remote: https://github.com/undergroundwebdesigns/application_php
+  ref: master
+  sha: b8ce4f1ac8f613c8bc63f9f0e292e4418fdda9f1
+  specs:
+    application_php (2.0.1)
+      apache2 (>= 0.0.0)
+      application (>= 3.0)
+      php (>= 0.0.0)
 
 PATH
   remote: site-cookbooks/panomira_php_api
@@ -120,6 +132,7 @@ PATH
   specs:
     panomira_rails_api (0.1.0)
       application (>= 0.0.0)
+      application_ruby (>= 0.0.0)
       database (>= 0.0.0)
       neo4j-multi-server (>= 0.0.0)
       ssh (>= 0.0.0)
@@ -127,7 +140,7 @@ PATH
 DEPENDENCIES
   apache2 (>= 0)
   application (>= 0)
-  application_php (= 2.0.0)
+  application_php (>= 0)
   application_ruby (>= 0)
   apt (>= 0)
   build-essential (>= 0)
