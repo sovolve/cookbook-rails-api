@@ -63,7 +63,6 @@ application "rails_api" do
   rails do
     gems "bundler" => nil, "rails" => {:version => "4.0.2"}
     bundle_command ". /etc/profile.d/rvm.sh; bundle"
-    bundle_options "2>&1 | tee -a /var/log/bundler.log"
     database_master_role "rails_db_master"
   end
 

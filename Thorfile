@@ -9,27 +9,29 @@ class Panomira < Thor
   include Thor::Actions
 
   desc "go", "prepare, start, and provision the virtual machine(s)"
-  def go
+  def go (machines = :all)
     setup
+    machines = validate_machines(machines)
     run "cd #{base_path} && bundle exec librarian-chef install" unless File.exist? "#{base_path}/cookbooks/panomira_php_api"
-    unless vagrant_up?
-      run "vagrant up"
+    unless vagrant_up? (machines)
+      run "vagrant up #{machines}"
     end
   end
 
   desc "update", "update the virtual machine(s)"
-  def update(restart = false)
+  def update(machines = :all, restart = false)
     setup
+    machines = validate_machines(machines)
     run "cd #{base_path} && git pull"
     run "cd #{base_path} && bundle exec librarian-chef install"
-    if vagrant_up? 'rails_api'
+    if vagrant_up? machines
       if restart
-        run "vagrant reload --provision"
+        run "vagrant reload #{machines} --provision"
       else
-        run "vagrant provision rails_api"
+        run "vagrant provision #{machines}"
       end
     else
-      run "vagrant up rails_api --provision"
+      run "vagrant up #{machines} --provision"
     end
   end
 
@@ -68,10 +70,26 @@ class Panomira < Thor
   end
 
   def vagrant_up? (machine_name = 'default')
-    `vagrant status #{machine_name}` =~ /running/
+    if machine_name
+      `vagrant status #{machine_name}` =~ /running/
+    else
+      `vagrant status`.split("\n").each do |line|
+        return false unless line =~ /running/
+      end
+      true
+    end
   end
 
   def base_path
      File.expand_path(File.dirname(__FILE__))
+  end
+
+  def validate_machines(machines)
+    if machines
+      machines = machines.to_sym
+      raise "Unknown parameter. You gave #{machines}, only 'all', 'php_api' and 'rails_api' are understood." unless [:all, :php_api, :rails_api].include? machines
+      machines = nil if machines == :all # We don't need to do anything special, vagrant defaults to all machines.
+    end
+    machines
   end
 end

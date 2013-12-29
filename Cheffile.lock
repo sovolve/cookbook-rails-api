@@ -3,6 +3,13 @@ SITE
   specs:
     apache2 (1.8.14)
     application (4.1.4)
+    application_ruby (3.0.2)
+      apache2 (>= 0.0.0)
+      application (~> 4.0)
+      logrotate (~> 1.0)
+      passenger_apache2 (>= 0.0.0)
+      runit (~> 1.0)
+      unicorn (>= 0.0.0)
     apt (2.3.4)
     aws (1.0.0)
     build-essential (1.4.2)
@@ -85,19 +92,6 @@ GIT
   sha: d1f6690319eb4e5278af0060eb053937541d8d90
   specs:
     curl (1.0.0)
-
-GIT
-  remote: https://github.com/poise/application_ruby
-  ref: master
-  sha: f073ae50a58db1a0d496290888da457ee63244c8
-  specs:
-    application_ruby (3.0.2)
-      apache2 (>= 0.0.0)
-      application (~> 4.0)
-      logrotate (~> 1.0)
-      passenger_apache2 (>= 0.0.0)
-      runit (~> 1.0)
-      unicorn (>= 0.0.0)
 
 GIT
   remote: https://github.com/sovolve/cookbook-neo4j-multi-server
