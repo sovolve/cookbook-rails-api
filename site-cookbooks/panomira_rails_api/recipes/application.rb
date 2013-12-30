@@ -18,24 +18,21 @@ environment_string = node["rails_api"]["environment"] || node.chef_environment
 
 # Lookup related nodes, and determine some information about them (mostly host & port)
 # so that we can use them to configure the app.
-memcached_node = node_by_role("memcached", environment_string)
-memcached = {}
-memcached[:host] = host_from_node memcached_node
-memcached[:port] = memcached_node.memcached.port if memcached_node
-
 neo4j_main_node = node_by_role("rails_neo4j_main", environment_string)
 neo4j_main = {}
+neo4j_main[:name] = 'main'
 neo4j_main[:host] = host_from_node neo4j_main_node
 neo4j_main[:port] = neo4j_main_node.rails_api.neo4j_main.port
 
 neo4j_contacts_node = node_by_role("rails_neo4j_contacts", environment_string) 
 neo4j_contacts = {}
+neo4j_contacts[:name] = 'contacts'
 neo4j_contacts[:host] = host_from_node neo4j_contacts_node
 neo4j_contacts[:port] = neo4j_contacts_node.rails_api.neo4j_contacts.port
 
-mysql_master_node = node_by_role("rails_db_master", environment_string)
-mysql_master = {}
-mysql_master[:host] = host_from_node mysql_master_node 
+database_name = node.rails_api.database_name
+db_username = node.rails_api.database_username
+db_password = node.rails_api.database_password
 
 include_recipe "rvm::system"
 include_recipe "rvm::gem_package"
@@ -56,9 +53,22 @@ application "rails_api" do
 
   environment "SO_ENVIRONMENT" => environment_string, "RAILS_ENV" => environment_string
 
-  # TODO: Enable & debug.
-  #migrate true
-  enable_submodules true
+  migrate true
+
+  before_migrate do
+    template "#{new_resource.shared_path}/neo4j.yml" do
+      source "neo4j.yml.erb"
+      mode 0644
+      owner node.rails_api.user
+      group node.rails_api.group
+      variables ({
+        :rails_env => environment_string,
+        :servers => [neo4j_main, neo4j_contacts],
+      })
+    end
+  end
+
+  symlink_before_migrate "neo4j.yml" => "config/neo4j.yml"
 
   rails do
     gems "bundler" => "1.5.1"
@@ -68,6 +78,13 @@ application "rails_api" do
     # back on it's own ruby (1.9) and that just doesn't work :P.
     bundle_command "/usr/local/rvm/bin/ruby-rvm-env #{node.rvm.root_path}/gems/ruby-#{node.rvm.gem_package.rvm_string}/bin/bundle"
     database_master_role "rails_db_master"
+
+    database do
+      adapter "mysql2"
+      database database_name
+      username db_username
+      password db_password
+    end
   end
 
   memcached do

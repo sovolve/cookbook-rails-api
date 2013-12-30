@@ -7,7 +7,7 @@ VAGRANTFILE_API_VERSION = "2"
 # at least need to reprovision the servers, and _may_ need to re-create
 # them from scratch. Also, both servers _should_ use the same environemnt,
 # behaviour if both servers are using different environments is undefined.
-ENVIRONMENT = "development"
+ENVIRONMENT = "dev"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # All Vagrant configuration is done here. The most common configuration

@@ -1,0 +1,6 @@
+<%= @rails_env %>:
+<%- @servers.each do |server| %>
+  <%= server[:name] %>:
+    host: <%= server[:host] %>
+    port: <%= server[:port] %>
+<%- end %>
