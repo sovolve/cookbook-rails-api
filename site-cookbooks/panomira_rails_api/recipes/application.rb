@@ -15,6 +15,7 @@ end
 # The environment string is used to run commands, name config files, etc. It can be over-ridden by setting
 # an attribute, but defaults to the name of the currently running chef_environment.
 environment_string = node["rails_api"]["environment"] || node.chef_environment
+production_env = ['production', 'beta'].include? environment_string
 
 # Lookup related nodes, and determine some information about them (mostly host & port)
 # so that we can use them to configure the app.
@@ -34,8 +35,10 @@ database_name = node.rails_api.database_name
 db_username = node.rails_api.database_username
 db_password = node.rails_api.database_password
 
+include_recipe "runit"
 include_recipe "rvm::system"
 include_recipe "rvm::gem_package"
+include_recipe "panomira_rails_api::nginx"
 include_recipe "panomira_rails_api::users"
 
 application "rails_api" do
@@ -49,7 +52,7 @@ application "rails_api" do
   
   # We deploy from the master branch only to beta & production environments. We deploy from
   # develop everywhere else:
-  revision (['production', 'beta'].include? environment_string) ? 'master' : 'develop'
+  revision production_env ? 'master' : 'develop'
 
   environment "SO_ENVIRONMENT" => environment_string, "RAILS_ENV" => environment_string
 
@@ -90,4 +93,16 @@ application "rails_api" do
   memcached do
     role "memcached"
   end
+
+  unicorn do
+    listen "/tmp/unicorn.sock" => {}
+    forked_user node.rails_api.user
+    forked_group node.rails_api.group
+    worker_processes production_env ? 5 : 1
+    preload_app production_env
+    if production_env
+      # Before fork / after fork stuff should go here for no downtime deploys.
+    end
+  end
+  action :force_deploy
 end
