@@ -37,9 +37,9 @@ mysql_master_node = node_by_role("rails_db_master", environment_string)
 mysql_master = {}
 mysql_master[:host] = host_from_node mysql_master_node 
 
-include_recipe "panomira_rails_api::users"
 include_recipe "rvm::system"
 include_recipe "rvm::gem_package"
+include_recipe "panomira_rails_api::users"
 
 application "rails_api" do
   name node.rails_api.subdomain
@@ -54,15 +54,19 @@ application "rails_api" do
   # develop everywhere else:
   revision (['production', 'beta'].include? environment_string) ? 'master' : 'develop'
 
-  environment "SO_ENVIRONMENT" => environment_string
+  environment "SO_ENVIRONMENT" => environment_string, "RAILS_ENV" => environment_string
 
   # TODO: Enable & debug.
   #migrate true
   enable_submodules true
 
   rails do
-    gems "bundler" => nil, "rails" => {:version => "4.0.2"}
-    bundle_command ". /etc/profile.d/rvm.sh; bundle"
+    gems "bundler" => "1.5.1"
+    bundler_without_groups ["doc"]
+    # Points bundler at the version of ruby that gem_package is configured to use. That's where bundler
+    # will be installed, so that's the one we want. If we don't specify this manually then chef will fall
+    # back on it's own ruby (1.9) and that just doesn't work :P.
+    bundle_command "/usr/local/rvm/bin/ruby-rvm-env #{node.rvm.root_path}/gems/ruby-#{node.rvm.gem_package.rvm_string}/bin/bundle"
     database_master_role "rails_db_master"
   end
 

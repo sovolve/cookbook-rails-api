@@ -26,10 +26,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # via the IP. Host-only networks can talk to the host machine as well as
     # any other machines on the same network, but cannot be accessed (through this
     # network interface) by any external networks.
-    config.vm.network :private_network, ip: "192.168.33.42"
-    config.ssh.forward_agent = false
+    php_api.vm.network :private_network, ip: "192.168.33.42"
+    php_api.ssh.forward_agent = false
 
-    config.vm.provision :chef_solo do |chef|
+    php_api.vm.provision :chef_solo do |chef|
       chef.encrypted_data_bag_secret_key_path = "#{File.expand_path(File.dirname(__FILE__))}/data_bag_key"
       chef.cookbooks_path = "cookbooks"
       chef.roles_path = "roles"
@@ -58,10 +58,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # via the IP. Host-only networks can talk to the host machine as well as
     # any other machines on the same network, but cannot be accessed (through this
     # network interface) by any external networks.
-    config.vm.network :private_network, ip: "192.168.33.45"
-    config.ssh.forward_agent = false
+    rails_api.vm.network :private_network, ip: "192.168.33.45"
+    rails_api.ssh.forward_agent = false
 
-    config.vm.provision :chef_solo do |chef|
+    rails_api.vm.provision :chef_solo do |chef|
       chef.encrypted_data_bag_secret_key_path = "#{File.expand_path(File.dirname(__FILE__))}/data_bag_key"
       chef.cookbooks_path = "cookbooks"
       chef.roles_path = "roles"
