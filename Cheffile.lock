@@ -3,6 +3,13 @@ SITE
   specs:
     apache2 (1.8.14)
     application (4.1.4)
+    application_ruby (3.0.2)
+      apache2 (>= 0.0.0)
+      application (~> 4.0)
+      logrotate (~> 1.0)
+      passenger_apache2 (>= 0.0.0)
+      runit (~> 1.0)
+      unicorn (>= 0.0.0)
     apt (2.3.4)
     aws (1.0.0)
     build-essential (1.4.2)
@@ -103,19 +110,6 @@ GIT
       apache2 (>= 0.0.0)
       application (>= 3.0)
       php (>= 0.0.0)
-
-GIT
-  remote: https://github.com/undergroundwebdesigns/application_ruby
-  ref: master
-  sha: 35ea13dd0c74c3905cecb2256e64e84cd91f7b49
-  specs:
-    application_ruby (3.0.2)
-      apache2 (>= 0.0.0)
-      application (~> 4.0)
-      logrotate (~> 1.0)
-      passenger_apache2 (>= 0.0.0)
-      runit (~> 1.0)
-      unicorn (>= 0.0.0)
 
 PATH
   remote: site-cookbooks/panomira_php_api
