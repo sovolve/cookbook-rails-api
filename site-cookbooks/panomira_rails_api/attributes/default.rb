@@ -7,6 +7,13 @@ default["rails_api"].tap do |rails_api|
   rails_api["subdomain"] = "api"
 
   rails_api["repo"] = "git@github.com:sovolve/panomira-api-ror.git"
+  # Set this to a git hash, branch etc. to control what is deployed by the
+  # deployed_application recipe. Defaults to 'master' in beta & production 
+  # environments, and to 'develop' in all others. Note that setting this
+  # to a branch will deploy the latest commit in that branch each time
+  # chef is run. To "lock" to a specific revision, set this attribute to
+  # that revision's hash.
+  rails_api["revision"] = nil 
 
   rails_api["database_name"] = "panomira_rails_api"
   rails_api["database_username"] = "mysql_rails_api"

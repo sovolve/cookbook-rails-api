@@ -6,6 +6,18 @@
 # 
 # All rights reserved - Do Not Redistribute
 #
+# NOTE: This recipe sets up the rails API as a deployed application
+# using chef's tools. This means it will clone the repo, set everything
+# up, run migrations etc.
+#
+# TODO: Running this recipe in the 'development' environment will probably
+# fail, as some of the development gems (jazz hands) have some env issues.
+# These were fixed in the shared_application recipe, but since this one wasn't
+# really designed to be run in "development" anyway, and fixing them would mean
+# hacking into the "applicaiton_ruby" cookbook, I haven't made the changes here.
+# The error involved was one of "non-absolute home" and had to do with the env variable
+# "HOME" not being set for the unicorn service. Alex W knows more if you're running
+# into this error.
 
 repo_host = node.rails_api.repo.split("@").last.split(":").first
 ssh_known_hosts repo_host do
@@ -58,7 +70,7 @@ application "rails_api" do
   
   # We deploy from the master branch only to beta & production environments. We deploy from
   # develop everywhere else:
-  revision production_env ? 'master' : 'develop'
+  revision node.rails_api.revision || (production_env ? 'master' : 'develop')
 
   environment "SO_ENVIRONMENT" => environment_string, "RAILS_ENV" => environment_string
 

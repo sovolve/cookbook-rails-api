@@ -6,6 +6,22 @@
 # 
 # All rights reserved - Do Not Redistribute
 #
+# NOTE: This recipe sets up a server to run the Rails API
+# in a "development" type environment. It assumes that the
+# folder <node.rails_api.path>/current is shared with the host
+# machine, and while it will checkout the repo if it's not already
+# there, it will NOT update it if it already exists. It's assumed
+# that you (the developer) will be making changes, switching branches
+# etc from your development machine here. The code below is taken
+# from the deployed_application recipe and from the official application
+# and application_ruby cookbooks to configure nginx, unicorn, bundler
+# and rvm to serve the app. It's kinda hacked together, and could probably
+# be cleaned up, but it works.
+#
+# NOTE: Further note. This recipe does NOT run migrations! You need to
+# do this manually be sshing into the server and running the appropriate
+# commands. This is because in development you don't always want migrations
+# run automagically.
 
 repo_host = node.rails_api.repo.split("@").last.split(":").first
 ssh_known_hosts repo_host do
