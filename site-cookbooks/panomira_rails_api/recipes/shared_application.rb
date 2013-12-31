@@ -153,8 +153,9 @@ link "#{node.rails_api.path}/current/config/neo4j.yml" do
   group node.rails_api.group
 end
 
+Chef::Log.info "Running bundle install"
 bundle_command = "/usr/local/rvm/bin/ruby-rvm-env #{node.rvm.root_path}/gems/ruby-#{node.rvm.gem_package.rvm_string}/bin/bundle"
-execute "echo `whoami` && #{bundle_command} install --verbose --path=/home/vagrant/" do
+execute "#{bundle_command} install --path=/home/vagrant/" do
   cwd "#{node.rails_api.path}/current"
   user "vagrant"
   environment "SO_ENVIRONMENT" => environment_string, "RAILS_ENV" => environment_string
@@ -163,6 +164,7 @@ end
 include_recipe "unicorn"
 
 unicorn_config "/etc/unicorn/rails_api.rb" do
+  working_directory "#{node.rails_api.path}/current"
   listen "/tmp/unicorn.sock" => {}
   forked_user "vagrant"
   forked_group node.rails_api.group
@@ -173,6 +175,7 @@ unicorn_config "/etc/unicorn/rails_api.rb" do
   if production_env
     # Before fork / after fork stuff should go here for no downtime deploys.
   end
+  notifies :restart, "runit_service[rails_api]"
 end
 
 node.default["rails_api"]["owner"] = "vagrant"
@@ -182,8 +185,8 @@ runit_service "rails_api" do
   log_template_name 'unicorn'
   owner "vagrant"
   group node.rails_api.group
+  env "HOME" => "/home/vagrant", "RAILS_ENV" => environment_string
 
-  cookbook 'application_ruby'
   options(
     :app => node.rails_api,
     :bundler => true,
