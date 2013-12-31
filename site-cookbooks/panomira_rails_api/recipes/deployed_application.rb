@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: panomira_rails_api
-# Recipe:: application
+# Recipe:: deployed_application
 #
 # Copyright (C) 2013 Sovolve
 # 
@@ -40,6 +40,12 @@ include_recipe "rvm::system"
 include_recipe "rvm::gem_package"
 include_recipe "panomira_rails_api::nginx"
 include_recipe "panomira_rails_api::users"
+
+directory "/var/log/unicorn" do
+  user node.rails_api.user
+  group node.rails_api.group
+  mode 0755
+end
 
 application "rails_api" do
   name node.rails_api.subdomain
@@ -99,10 +105,11 @@ application "rails_api" do
     forked_user node.rails_api.user
     forked_group node.rails_api.group
     worker_processes production_env ? 5 : 1
+    stdout_path "/var/log/unicorn/stdout.log"
+    stderr_path "/var/log/unicorn/stderr.log"
     preload_app production_env
     if production_env
       # Before fork / after fork stuff should go here for no downtime deploys.
     end
   end
-  action :force_deploy
 end

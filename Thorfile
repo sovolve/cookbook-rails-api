@@ -85,6 +85,14 @@ class Panomira < Thor
   end
 
   def validate_machines(machines)
+    if machines == :rails_api || machines == :all
+      code_path = File.expand_path("../panomira-api-ror", File.dirname(__FILE__))
+      unless File.directory? code_path
+        puts "Vagrant expects a folder named 'panomira-api-ror' to exist paralell to this folder containing the checked out Ruby on Rails codebase (from https://github.com/sovolve/panomira-api-ror). Creating it now, but NOT checking out the code. That's up to you!"
+        Dir.mkdir code_path
+      end
+    end
+
     if machines
       machines = machines.to_sym
       raise "Unknown parameter. You gave #{machines}, only 'all', 'php_api' and 'rails_api' are understood." unless [:all, :php_api, :rails_api].include? machines
