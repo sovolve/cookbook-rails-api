@@ -21,6 +21,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.omnibus.chef_version = '11.6.0'
 
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = 512
+  end
+  
+  config.vm.provider "vmware_fusion" do |vmware|
+    vmware.vmx["memsize"] = "512"
+  end
+
   config.vm.define "php_api" do |php_api|
     # Assign this VM to a host-only network IP, allowing you to access it
     # via the IP. Host-only networks can talk to the host machine as well as
