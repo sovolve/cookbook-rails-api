@@ -51,7 +51,7 @@ application "php_api" do
   
   # We deploy from the master branch only to beta & production environments. We deploy from
   # develop everywhere else:
-  revision (['production', 'beta'].include? environment_string) ? 'master' : 'develop'
+  revision node.php_api.revision || ((['production', 'beta'].include? environment_string) ? 'master' : 'develop')
 
   environment "SO_ENVIRONMENT" => environment_string
 
