@@ -17,7 +17,11 @@ mysql_database "create #{node.php_api.database_name}" do
   action :create
 end
 
-%W{ % #{node['ipaddress']} #{node['fqdn']} localhost }.each do |h|
+hosts = %W{ % #{node['ipaddress']} #{node['fqdn']} localhost }
+if ["development", "php_api_test"].include? node.chef_environment
+  hosts << "192.168.33.45"
+end
+hosts.each do |h|
   mysql_database_user node.php_api.database_username do
     connection connection_info
     password node.php_api.database_password

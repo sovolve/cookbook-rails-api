@@ -15,3 +15,5 @@ default["php_api"].tap do |php_api|
   php_api["neo4j_main"]["port"] = 7474
   php_api["neo4j_contacts"]["port"] = 7475
 end
+
+default['mysql']['bind_address'] = "0.0.0.0"

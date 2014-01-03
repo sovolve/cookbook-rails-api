@@ -104,6 +104,12 @@ application "php_api" do
     end
   end
 
+  before_restart do
+    service "mysql" do
+      action :restart
+    end
+  end
+
   mod_php_apache2 do
     app_root "/httpdocs"
     webapp_template "web_app.conf.erb"

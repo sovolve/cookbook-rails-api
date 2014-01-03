@@ -118,7 +118,6 @@ template "#{node.rails_api.path}/shared/neo4j.yml" do
 end
 
 template "#{node.rails_api.path}/shared/database.yml" do
-  cookbook "application_ruby"
   source "database.yml.erb"
   mode 0644
   owner "vagrant"
