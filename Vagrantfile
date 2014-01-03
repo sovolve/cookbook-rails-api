@@ -37,6 +37,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     php_api.vm.network :private_network, ip: "192.168.33.42"
     php_api.ssh.forward_agent = false
 
+
     php_api.vm.provision :chef_solo do |chef|
       chef.encrypted_data_bag_secret_key_path = "#{File.expand_path(File.dirname(__FILE__))}/data_bag_key"
       chef.cookbooks_path = "cookbooks"
@@ -74,6 +75,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     rails_api.vm.synced_folder File.expand_path("../panomira-api-ror", File.dirname(__FILE__)), "/data/web/rails_api/current"
 
     rails_api.vm.provision :chef_solo do |chef|
+
       chef.encrypted_data_bag_secret_key_path = "#{File.expand_path(File.dirname(__FILE__))}/data_bag_key"
       chef.cookbooks_path = "cookbooks"
       chef.roles_path = "roles"
@@ -88,6 +90,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       chef.environment = ENVIRONMENT
 
       chef.add_role "vagrant_base" # Does vagrant specific config. Would be left off when provisioning a non-vagrant server.
+      chef.add_recipe "rvm::vagrant" # This is here rather than in the vagrant_base role, as the php_api VM doesn't use RVM, and therefore running this for that VM breaks it.
       chef.add_role "rails_development_server" # Loads the whole stack required to run the Rails API on one server.
 
       chef.json = {
