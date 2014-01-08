@@ -26,3 +26,5 @@ end
 default["rvm"]["default_ruby"] = "2.0.0-p353@global"
 default['rvm']['vagrant']['system_chef_solo'] = "/usr/bin/chef-solo"
 default['rvm']['gem_package']['rvm_string'] = node['rvm']['default_ruby'] # Without this seems to use the original default, which is ruby 1.9.3. We want it to use the default defined above.
+
+default[:neo4j][:server][:version] = '1.9.5'

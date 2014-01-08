@@ -26,13 +26,21 @@ class Panomira < Thor
     run "cd #{base_path} && bundle exec librarian-chef install"
     if vagrant_up? machines
       if restart
-        run "vagrant reload #{machines} --provision"
+        run "vagrant reload #{machines}"
+        run "vagrant provision #{machines}"
       else
         run "vagrant provision #{machines}"
       end
     else
-      run "vagrant up #{machines} --provision"
+      run "vagrant up #{machines}--provision"
     end
+  end
+
+  desc "rebuild", "destroy and recreate the VMs"
+  def rebuild(machines = :all)
+    machines = validate_machines(machines)
+    run "vagrant destroy -f #{machines}"
+    update(machines)
   end
 
   desc "stop", "shut down virtual machines"
@@ -98,6 +106,6 @@ class Panomira < Thor
       raise "Unknown parameter. You gave #{machines}, only 'all', 'php_api' and 'rails_api' are understood." unless [:all, :php_api, :rails_api].include? machines
       machines = nil if machines == :all # We don't need to do anything special, vagrant defaults to all machines.
     end
-    machines
+    machines ? "#{machines} " : nil
   end
 end

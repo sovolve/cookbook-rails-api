@@ -17,3 +17,5 @@ default["php_api"].tap do |php_api|
 end
 
 default['mysql']['bind_address'] = "0.0.0.0"
+
+default[:neo4j][:server][:version] = '1.9.5'
