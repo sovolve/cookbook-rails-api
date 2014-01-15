@@ -19,7 +19,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "opscode-ubuntu-12.04"
   config.vm.box_url = "http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-12.04_chef-provisionerless.box"
 
-  config.omnibus.chef_version = '11.6.0'
+  config.omnibus.chef_version = '11.06.0'
 
   config.vm.provider "virtualbox" do |vb|
     vb.memory = 512

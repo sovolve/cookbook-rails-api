@@ -18,4 +18,4 @@ end
 
 default['mysql']['bind_address'] = "0.0.0.0"
 
-default[:neo4j][:server][:version] = '1.9.5'
+default[:neo4j][:server][:version] = '2.0.0'

@@ -169,7 +169,7 @@ link "#{node.rails_api.path}/current/config/neo4j.yml" do
 end
 
 Chef::Log.info "Running bundle install"
-bundle_command = "/usr/local/rvm/bin/ruby-rvm-env #{node.rvm.root_path}/gems/ruby-#{node.rvm.gem_package.rvm_string}/bin/bundle"
+bundle_command = "/usr/local/rvm/bin/rvm-auto-ruby #{node.rvm.root_path}/gems/ruby-#{node.rvm.gem_package.rvm_string}/bin/bundle"
 execute "#{bundle_command} install --path=/home/vagrant/" do
   cwd "#{node.rails_api.path}/current"
   user "vagrant"
