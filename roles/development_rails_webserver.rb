@@ -3,5 +3,6 @@ description "Installs a webserver to serve the Panomira Rails API in 'developmen
 
 run_list(
   "role[base]",
+  "recipe[panomira_rails_api::hosts]",
   "recipe[panomira_rails_api::shared_application]",
 )
