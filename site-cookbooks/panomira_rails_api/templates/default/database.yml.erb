@@ -7,6 +7,18 @@
   encoding: <%= @database.has_key?('encoding') ? @database['encoding'] : 'utf8' %>
   reconnect: true
 
+<%- if node.chef_environment == "development" %>
+test:
+  adapter: <%= @database['adapter'] %>
+  host: <%= @host %>
+  database: <%= @database['database'] %>_test
+  username: <%= @database['username'] %>
+  password: <%= @database['password'] %>
+  encoding: <%= @database.has_key?('encoding') ? @database['encoding'] : 'utf8' %>
+  reconnect: true
+
+<%- end %>
+
 <%- if ["development", "php_api_test"].include? node.chef_environment %>
 php_test:
   adapter: mysql2
