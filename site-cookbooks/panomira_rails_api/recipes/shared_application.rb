@@ -106,6 +106,12 @@ git "#{node.rails_api.path}/current" do
   action :checkout
 end
 
+directory "#{node.rails_api.path}/current/vendor/gems" do
+  user "vagrant"
+  group node.rails_api.group
+  mode 0755
+end
+
 template "#{node.rails_api.path}/shared/neo4j.yml" do
   source "neo4j.yml.erb"
   mode 0644
@@ -170,7 +176,7 @@ end
 
 Chef::Log.info "Running bundle install"
 bundle_command = "/usr/local/rvm/bin/rvm-auto-ruby #{node.rvm.root_path}/gems/ruby-#{node.rvm.gem_package.rvm_string}/bin/bundle"
-execute "#{bundle_command} install --path=/home/vagrant/" do
+execute "#{bundle_command} install --path=vendor/gems" do
   cwd "#{node.rails_api.path}/current"
   user "vagrant"
   environment "SO_ENVIRONMENT" => environment_string, "RAILS_ENV" => environment_string
