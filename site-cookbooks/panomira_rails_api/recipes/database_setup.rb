@@ -7,22 +7,14 @@
 # All rights reserved - Do Not Redistribute
 #
 
-include_recipe "database::mysql"
-
 connection_info = {:host => "localhost", :username => 'root', :password => node['mysql']['server_root_password']}
 
-mysql_database "create #{node.rails_api.database_name}" do
-  database_name node.rails_api.database_name
-  connection connection_info
-  action :create
+execute "create table #{node.rails_api.database_name}" do
+  command "mysql -u#{connection_info[:username]} -p#{connection_info[:password]} -e 'CREATE DATABASE IF NOT EXISTS #{node.rails_api.database_name}'"
 end
 
-%W{ % #{node['ipaddress']} #{node['fqdn']} localhost }.each do |h|
-  mysql_database_user node.rails_api.database_username do
-    connection connection_info
-    password node.rails_api.database_password
-    database_name node.rails_api.database_name
-    host h
-    action :grant
+execute "create users in database #{node.rails_api.database_name}" do
+  %W{ % #{node['ipaddress']} #{node['fqdn']} localhost }.each do |h|
+    command "mysql -u#{connection_info[:username]} -p#{connection_info[:password]} -e 'grant usage on #{node.rails_api.database_name}.* to #{node.rails_api.database_username}@#{h} identified by \"#{node.rails_api.database_password}\";'"
   end
 end

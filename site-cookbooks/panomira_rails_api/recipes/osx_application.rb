@@ -7,10 +7,10 @@
 # All rights reserved - Do Not Redistribute
 #
 
-include_recipe "database_setup"
+include_recipe "panomira_rails_api::database_setup"
 
 environment_string = "development"
-memcached = { host: 'localhost', port: 11211 }
+memcached = { 'ipaddress' => 'localhost', 'memcached' => {'port' => 11211 }}
 
 neo4j_main = { name: 'main', host: 'localhost', port: 7474 }
 neo4j_contacts = { name: 'contacts', host: 'localhost', port: 7474 }
