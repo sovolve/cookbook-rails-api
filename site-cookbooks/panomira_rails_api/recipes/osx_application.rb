@@ -66,11 +66,6 @@ template "#{node.rails_api.path}/config/memcached.yml" do
   })
 end
 
-execute "gem install bundler" do
-  cwd "#{node.rails_api.path}"
-  user node['current_user']
-end
-
 Chef::Log.info "Running bundle install"
 bundle_command = "bundle"
 execute "#{bundle_command} install" do
