@@ -15,6 +15,6 @@ end
 
 execute "create users in database #{node.rails_api.database_name}" do
   %W{ % #{node['ipaddress']} #{node['fqdn']} localhost }.each do |h|
-    command "mysql -u#{connection_info[:username]} -p#{connection_info[:password]} -e 'grant usage on #{node.rails_api.database_name}.* to #{node.rails_api.database_username}@#{h} identified by \"#{node.rails_api.database_password}\";'"
+    command "mysql -u#{connection_info[:username]} -p#{connection_info[:password]} -e 'grant all on #{node.rails_api.database_name}.* to #{node.rails_api.database_username}@#{h} identified by \"#{node.rails_api.database_password}\";'"
   end
 end
