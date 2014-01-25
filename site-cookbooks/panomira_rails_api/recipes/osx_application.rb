@@ -9,6 +9,8 @@
 
 include_recipe "panomira_rails_api::database_setup"
 
+base_path = File.expand_path(node.rails_api.path)
+
 environment_string = "development"
 memcached = { 'ipaddress' => 'localhost', 'memcached' => {'port' => 11211 }}
 
@@ -21,14 +23,14 @@ database_name = node.rails_api.database_name
 db_username = node.rails_api.database_username
 db_password = node.rails_api.database_password
 
-git "#{node.rails_api.path}" do
+git "#{base_path}" do
   user node['current_user']
   repository node.rails_api.repo
   revision "develop" # It always checks out the develop branch.
   action :checkout
 end
 
-template "#{node.rails_api.path}/config/neo4j.yml" do
+template "#{base_path}/config/neo4j.yml" do
   source "neo4j.yml.erb"
   mode 0644
   user node['current_user']
@@ -38,7 +40,7 @@ template "#{node.rails_api.path}/config/neo4j.yml" do
   })
 end
 
-template "#{node.rails_api.path}/config/database.yml" do
+template "#{base_path}/config/database.yml" do
   source "database.yml.erb"
   mode 0644
   user node['current_user']
@@ -54,7 +56,7 @@ template "#{node.rails_api.path}/config/database.yml" do
   })
 end
 
-template "#{node.rails_api.path}/config/memcached.yml" do
+template "#{base_path}/config/memcached.yml" do
   cookbook "application_ruby"
   source "memcached.yml.erb"
   mode 0644
@@ -69,7 +71,7 @@ end
 Chef::Log.info "Running bundle install"
 bundle_command = "bundle"
 execute "#{bundle_command} install" do
-  cwd "#{node.rails_api.path}"
+  cwd "#{base_path}"
   user node['current_user']
   environment "SO_ENVIRONMENT" => environment_string, "RAILS_ENV" => environment_string
 end
