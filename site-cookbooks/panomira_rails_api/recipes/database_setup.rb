@@ -13,8 +13,8 @@ execute "create table #{node.rails_api.database_name}" do
   command "mysql -u#{connection_info[:username]} -p#{connection_info[:password]} -e 'CREATE DATABASE IF NOT EXISTS #{node.rails_api.database_name}'"
 end
 
-execute "create users in database #{node.rails_api.database_name}" do
-  %W{ % #{node['ipaddress']} #{node['fqdn']} localhost }.each do |h|
-    command "mysql -u#{connection_info[:username]} -p#{connection_info[:password]} -e 'grant all on #{node.rails_api.database_name}.* to #{node.rails_api.database_username}@#{h} identified by \"#{node.rails_api.database_password}\";'"
+%W{ % #{node['ipaddress']} #{node['fqdn']} localhost }.each do |h|
+  execute "create users in database #{node.rails_api.database_name} with access from hots #{h}" do
+    command "mysql -u#{connection_info[:username]} -p#{connection_info[:password]} -e 'grant all on #{node.rails_api.database_name}.* to #{node.rails_api.database_username}@\"#{h}\" identified by \"#{node.rails_api.database_password}\";'"
   end
 end

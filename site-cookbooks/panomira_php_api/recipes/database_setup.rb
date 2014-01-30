@@ -7,26 +7,19 @@
 # All rights reserved - Do Not Redistribute
 #
 
-include_recipe "database::mysql"
-
 connection_info = {:host => "localhost", :username => 'root', :password => node['mysql']['server_root_password']}
 
-mysql_database "create #{node.php_api.database_name}" do
-  database_name node.php_api.database_name
-  connection connection_info
-  action :create
+execute "create table #{node.php_api.database_name}" do
+  command "mysql -u#{connection_info[:username]} -p#{connection_info[:password]} -e 'CREATE DATABASE IF NOT EXISTS #{node.php_api.database_name}'"
 end
 
 hosts = %W{ % #{node['ipaddress']} #{node['fqdn']} localhost }
 if ["development", "php_api_test"].include? node.chef_environment
   hosts << "192.168.33.45"
 end
+
 hosts.each do |h|
-  mysql_database_user node.php_api.database_username do
-    connection connection_info
-    password node.php_api.database_password
-    database_name node.php_api.database_name
-    host h
-    action :grant
+  execute "create users in database #{node.php_api.database_name} with access from host #{h}" do
+    command "mysql -u#{connection_info[:username]} -p#{connection_info[:password]} -e 'grant all on #{node.php_api.database_name}.* to #{node.php_api.database_username}@\"#{h}\" identified by \"#{node.php_api.database_password}\";'"
   end
 end

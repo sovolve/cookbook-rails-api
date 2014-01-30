@@ -13,3 +13,4 @@ bin/*
 data_bag_key
 /cookbooks/
 /tmp
+debugger.*
