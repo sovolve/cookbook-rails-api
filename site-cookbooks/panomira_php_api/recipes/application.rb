@@ -40,7 +40,7 @@ mysql_master[:host] = host_from_node mysql_master_node
 include_recipe "panomira_php_api::apt_setup"
 include_recipe "panomira_php_api::users"
 
-include_recipe "panomira_php_api::vim_config"
+include_recipe "panomira_php_api::debugger"
 
 application "php_api" do
   name node.php_api.subdomain
