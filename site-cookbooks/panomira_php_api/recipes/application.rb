@@ -40,8 +40,6 @@ mysql_master[:host] = host_from_node mysql_master_node
 include_recipe "panomira_php_api::apt_setup"
 include_recipe "panomira_php_api::users"
 
-include_recipe "panomira_php_api::debugger"
-
 application "php_api" do
   name node.php_api.subdomain
   path node.php_api.path
@@ -118,3 +116,8 @@ application "php_api" do
     webapp_overrides allow_override: "All"
   end
 end
+
+# Install & configure PHP debugger. Done AFTER the application is set up because
+# the application installs PHP, and doing this before will bork on 'from scratch' builds.
+include_recipe "panomira_php_api::debugger"
+
