@@ -28,7 +28,7 @@ define :composer, shared_path: nil, release_path: nil, owner: nil, group: nil, a
     to "#{params[:shared_path]}/vendor"
   end
 
-  execute "php composer.phar install -n -q" do
+  execute "php composer.phar install -n -v" do
     cwd params[:release_path]
     user params[:owner] if params[:owner]
   end
