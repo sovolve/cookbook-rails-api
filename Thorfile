@@ -22,8 +22,8 @@ class Panomira < Thor
   def update(machines = :all, restart = false)
     setup
     machines = validate_machines(machines)
-    run "cd #{base_path} && git pull"
-    run "cd #{base_path} && bundle exec librarian-chef install"
+    run "cd #{base_path} && git pull"                            # TODO: DISABLE WHEN DEBUGGING
+    run "cd #{base_path} && bundle exec librarian-chef install"  # NOTE: OVERWRITES cookbooks/*
     if vagrant_up? machines
       if restart
         run "vagrant reload #{machines}"

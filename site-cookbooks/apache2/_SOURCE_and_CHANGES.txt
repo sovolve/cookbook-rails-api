@@ -1,0 +1,12 @@
+cookbook "apache2", :git => 'git://github.com/citizenme/chef-repo.git', :path => 'cookbooks/apache2'
+
+Changes:
+
+* commented out RewriteLog and RewriteLogLevel usages — search for "#RewriteLog"
+
+* recipes/mod_mpm_event.rb, prepended with:
+
+    apache_module 'mpm_prefork' do
+      enable false
+      conf   false
+    end

@@ -14,9 +14,13 @@ cookbook "sudo"
 
 cookbook "ssh", github: "markolson/chef-ssh"
 
-cookbook "php"  # PHP is a dependency of application_php; *was* limited to 1.2.6 since 1.3 was broken (1.4.x should be fixed).
+cookbook "php"
 cookbook 'rvm', :git => 'git://github.com/fnichol/chef-rvm.git'
-cookbook "apache2"
+
+# see https://tickets.opscode.com/browse/COOK-3900; cookbook copied to site-cookbooks - change made
+#   in recipes/mod_mpm_event (mpm_event requires explicit disabling of mpm_prefork)
+#cookbook "apache2", :git => 'git://github.com/citizenme/chef-repo.git', :path => 'cookbooks/apache2'
+
 cookbook "memcached"
 cookbook "application"
 cookbook "application_php", github: "undergroundwebdesigns/application_php"

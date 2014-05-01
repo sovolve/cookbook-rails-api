@@ -106,7 +106,12 @@ application "php_api" do
 
   before_restart do
     service "mysql" do
-      action :restart
+      ignore_failure true
+      action :stop
+    end
+
+    service "mysql" do
+      action :start
     end
   end
 
@@ -119,5 +124,6 @@ end
 
 # Install & configure PHP debugger. Done AFTER the application is set up because
 # the application installs PHP, and doing this before will bork on 'from scratch' builds.
+
 include_recipe "panomira_php_api::debugger"
 
