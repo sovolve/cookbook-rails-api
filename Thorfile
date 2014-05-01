@@ -38,8 +38,7 @@ class Panomira < Thor
 
   desc "rebuild", "destroy and recreate the VMs"
   def rebuild(machines = :all)
-    machines = validate_machines(machines)
-    run "vagrant destroy -f #{machines}"
+    run "vagrant destroy -f #{validate_machines(machines)}"
     update(machines)
   end
 
